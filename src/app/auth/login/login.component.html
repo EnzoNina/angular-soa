@@ -1,0 +1,34 @@
+<div class="wrapper">
+  <div class="title"><span>Inicio de Sesion</span></div>
+    <form class="login-form" (ngSubmit)="login()" #loginForm="ngForm">
+      <div class="row">
+        <i class="fas fa-user"></i>
+        <label for="email"></label>
+          <input 
+            type="email" 
+            id="email" 
+            placeholder="ejemplo@correo.com" 
+            required 
+            [(ngModel)]="email" 
+            name="email" 
+          />
+      </div>
+        <div class="row">
+          <i class="fas fa-lock"></i>
+          <label for="password"></label>
+          <input 
+            type="password" 
+            id="password" 
+            placeholder="********" 
+            required 
+            [(ngModel)]="password" 
+            name="password" 
+          />
+        </div>
+        <div class="pass"><a href="#">¿Olvidaste tu contraseña?</a></div>
+        <div class="row button">          
+          <button type="submit">Login</button>
+        </div>
+        <p class="signup-link">¿No tienes cuenta? <a href="/auth/register">Regístrate</a></p>
+      </form>
+</div>
