@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
   private baseUrl = 'http://localhost:8080/auth';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cookieService: CookieService) {}
 
   login(email: string, password: string): Observable<any> {
     const loginData = { email, password };
@@ -28,4 +29,7 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/verificar-cuenta`, { correo, codigo });
   }
 
+  isAuthenticated(): boolean {
+    return this.cookieService.check('jwt');
+  }
 }

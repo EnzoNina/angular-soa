@@ -4,7 +4,7 @@ import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-home-page',
-  imports: [CurrencyPipe, NgFor],
+  imports: [],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
 })

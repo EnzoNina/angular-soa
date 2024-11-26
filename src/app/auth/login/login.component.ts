@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -14,12 +16,14 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router, private cookieService: CookieService) {}
 
   login() {
     this.authService.login(this.email, this.password).pipe(
       tap(response => {
         console.log('Login successful', response);
+        this.cookieService.set('jwt', response.jwt);
+        this.router.navigate(['/index']);
       }),
       catchError(error => {
         console.error('Login failed', error);
