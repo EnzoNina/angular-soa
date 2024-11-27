@@ -13,20 +13,20 @@ import { of } from 'rxjs';
 })
 export class RegisterComponent {
   name: string = ''; // Nombres
-  lastname: string = ''; // ApeP
-  lastname2: string = ''; // ApeM
+  apellidop: string = ''; // ApeP
+  apellidom: string = ''; // ApeM
   email: string = '';
   password: string = '';
 
   constructor(private authService: AuthService, private router:Router) { }
 
   register() {
-    this.authService.register(this.name, this.lastname, this.lastname2, this.email, this.password).pipe(
+    this.authService.register(this.name, this.apellidop, this.apellidom, this.email, this.password).pipe(
       tap(response => {
         console.log('Data', this.email);
         console.log('Registration successful', response);
         this.authService.sendVerificationEmail(this.email).subscribe();
-        this.router.navigate(['/verify-email'], { queryParams: { email: this.email } });
+        this.router.navigate(['/auth/verify-email'], { queryParams: { email: this.email } });
       }),
       catchError(error => {
         console.error('Registration failed', error);

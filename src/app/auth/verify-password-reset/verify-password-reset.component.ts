@@ -7,32 +7,33 @@ import { of } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-verify-email', 
-  templateUrl: './verify-email.component.html',
-  styleUrls: ['./verify-email.component.css'],
+  selector: 'app-verify-password-reset',
+  templateUrl: './verify-password-reset.component.html',
+  styleUrls: ['./verify-password-reset.component.css'],
   imports: [FormsModule]
 })
-export class VerifyEmailComponent {
+export class VerifyPasswordResetComponent {
   email: string = '';
   code: string = '';
+  newPassword: string = '';
 
-  constructor(private authService: AuthService, private route: ActivatedRoute, private router:Router) {
+  constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.email = params['email'];
     });
   }
 
-  verify() {
+  verifyAndResetPassword() {
     this.authService.verifyEmail(this.email, this.code).pipe(
-      tap(response => {
-        console.log('Verification successful', response);        
-        Swal.fire('¡Verificación exitosa!', 'Tu correo ha sido verificado correctamente', 'success');
-        // Redirigir al login
-        this.router.navigate(['/auth/login']);
+      tap(() => {
+        this.authService.resetPassword(this.email, this.code
+          , this.newPassword).subscribe(() => {
+            Swal.fire('¡Contraseña actualizada!', 'Tu contraseña ha sido actualizada correctamente', 'success');
+            this.router.navigate(['/auth/login']);
+          });
       }),
       catchError(error => {
         console.error('Verification failed', error);
-        // Mostrar un mensaje de error
         Swal.fire('¡Verificación fallida!', 'El código de verificación es incorrecto', 'error');
         return of(null);
       })
