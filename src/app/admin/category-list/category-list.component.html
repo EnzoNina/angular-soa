@@ -1,5 +1,6 @@
 <div class="container">
   <h2>Lista de Categorías</h2>
+  <button class="btn btn-primary mb-3" (click)="openCreateModal()">Crear Categoría</button>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -19,33 +20,4 @@
       </tr>
     </tbody>
   </table>
-</div>
-
-<!-- Modal de edición -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Editar Categoría</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Formulario de edición de categoría aquí -->
-        <form>
-          <div class="mb-3">
-            <label for="categoryNombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="categoryNombre" [(ngModel)]="selectedCategory.nombre" name="nombre">
-          </div>
-          <div class="mb-3">
-            <label for="categoryDescripcion" class="form-label">Descripción</label>
-            <input type="text" class="form-control" id="categoryDescripcion" [(ngModel)]="selectedCategory.descripcion" name="descripcion">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="saveCategory()">Guardar</button>
-      </div>
-    </div>
-  </div>
 </div>

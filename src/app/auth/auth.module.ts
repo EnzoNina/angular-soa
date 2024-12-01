@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { provideHttpClient } from '@angular/common/http';
+import { AuthService } from '../core/services/auth.service';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,6 @@ import { provideHttpClient } from '@angular/common/http';
     RegisterComponent,
     VerifyEmailComponent
   ],
-  providers: [provideHttpClient()]
+  providers: [provideHttpClient(), AuthService]
 })
 export class AuthModule { }

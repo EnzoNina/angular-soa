@@ -1,33 +1,39 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap, switchMap } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
+import { CartService } from './cart.service';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
-  private baseUrl = 'http://localhost:9032/auth';
+  private baseUrl = environment.auth_url;
+  private userUrl = environment.users_url;
   private jwtHelper = new JwtHelperService();
   private rolesSubject = new BehaviorSubject<string[]>([]);
   roles$ = this.rolesSubject.asObservable();
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {
+  constructor(private http: HttpClient, private cookieService: CookieService, private cartService: CartService) {
   }
 
-  login(email: string, password: string): Observable<{ token: string }> {
+  login(email: string, password: string): Observable<{ token: string, usuario: any }> {
     const loginData = { email, password };
-    return this.http.post<{ token: string }>(`${this.baseUrl}/login`, loginData).pipe(
+    return this.http.post<{ token: string, usuario: any }>(`${this.baseUrl}/login`, loginData).pipe(
       tap(response => {
-        const decodedToken = this.jwtHelper.decodeToken(response.token);
-        const roles = decodedToken.roles || [];
+        // Limpiar todas las cookies antes de establecer las nuevas
+        this.cookieService.deleteAll();
+        const roles = response.usuario.roles ? [response.usuario.roles] : [];
         this.rolesSubject.next(roles);
         this.cookieService.set('jwt', response.token);
         this.cookieService.set('roles', JSON.stringify(roles));
-      })
+      }),
+      switchMap(() => this.cartService.createCartIfNotExists())
     );
   }
 

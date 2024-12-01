@@ -1,3 +1,10 @@
-<app-header></app-header>
+<ng-container *ngIf="!isAdminRoute && showHeaderFooter">
+  <app-header></app-header>
+</ng-container>
+<ng-container *ngIf="isAdminRoute">
+  <app-admin-header></app-admin-header>
+</ng-container>
 <router-outlet></router-outlet>
-<app-footer></app-footer>
+<ng-container *ngIf="showHeaderFooter">
+  <app-footer></app-footer>
+</ng-container>

@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
-import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-home-page',

@@ -1,0 +1,8 @@
+<div class="product-list-container">
+  <h2>Lista de Productos</h2>
+  <div *ngFor="let product of products" class="product-item">
+    <p>{{ product.nombre }}</p>
+    <p>{{ product.precio }}</p>
+    <button (click)="addToCart(product.id)">Agregar al Carrito</button>
+  </div>
+</div>

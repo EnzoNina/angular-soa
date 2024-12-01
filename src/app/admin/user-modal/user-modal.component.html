@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>{{ data.user.id ? 'Editar Usuario' : 'Crear Usuario' }}</h1>
+<div mat-dialog-content>
+  <form>
+    <div class="mb-3">
+      <label for="nombres" class="form-label">Nombres</label>
+      <input type="text" class="form-control" id="nombres" [(ngModel)]="data.user.nombres" name="nombres">
+    </div>
+    <div class="mb-3">
+      <label for="apellidop" class="form-label">Apellido Paterno</label>
+      <input type="text" class="form-control" id="apellidop" [(ngModel)]="data.user.apellidop" name="apellidop">
+    </div>
+    <div class="mb-3">
+      <label for="apellidom" class="form-label">Apellido Materno</label>
+      <input type="text" class="form-control" id="apellidom" [(ngModel)]="data.user.apellidom" name="apellidom">
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" [(ngModel)]="data.user.email" name="email">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Contraseña</label>
+      <input type="password" class="form-control" id="password" [(ngModel)]="data.user.password" name="password">
+    </div>
+    <div class="mb-3">
+      <label for="cuenta_verificada" class="form-label">Cuenta Verificada</label>
+      <input type="checkbox" class="form-check-input" id="cuenta_verificada" [(ngModel)]="data.user.cuenta_verificada" name="cuenta_verificada">
+    </div>
+    <div class="mb-3">
+      <label for="activo" class="form-label">Activo</label>
+      <input type="checkbox" class="form-check-input" id="activo" [(ngModel)]="data.user.activo" name="activo">
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="true">Guardar</button>
+</div>

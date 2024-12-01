@@ -1,21 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminCategoryService } from '../../core/services/admin-category.service';
 import { FormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NgFor } from '@angular/common';
-import * as bootstrap from 'bootstrap';
 import Swal from 'sweetalert2';
+import { CategoryModalComponent } from '../category-modal/category-modal.component';
 
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.css'],
-  imports: [FormsModule, NgFor]
+  imports: [FormsModule, NgFor, MatDialogModule]
 })
 export class CategoryListComponent implements OnInit {
   categories: any[] = [];
   selectedCategory: any = {};
 
-  constructor(private adminCategoryService: AdminCategoryService) { }
+  constructor(
+    private adminCategoryService: AdminCategoryService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.getAllCategories();
@@ -26,18 +30,41 @@ export class CategoryListComponent implements OnInit {
       this.categories = categories;
     });
   }
+  openCreateModal(): void {
+    this.selectedCategory = { nombre: '', descripcion: '' }; // Inicializa una nueva categoría
+    const dialogRef = this.dialog.open(CategoryModalComponent, {
+      data: { category: this.selectedCategory }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.createCategory();
+      }
+    });
+  }
 
   openEditModal(category: any): void {
     this.selectedCategory = { ...category };
-    const modal = new bootstrap.Modal('editModal');
-    modal.show();
+    const dialogRef = this.dialog.open(CategoryModalComponent, {
+      data: { category: this.selectedCategory }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.saveCategory();
+      }
+    });
+  }
+
+  createCategory(): void {
+    this.adminCategoryService.createCategoria(this.selectedCategory).subscribe(() => {
+      this.getAllCategories();
+    });
   }
 
   saveCategory(): void {
     this.adminCategoryService.updateCategoria(this.selectedCategory.id, this.selectedCategory).subscribe(() => {
       this.getAllCategories();
-      const modal = new bootstrap.Modal('editModal');
-      modal.hide();
     });
   }
 

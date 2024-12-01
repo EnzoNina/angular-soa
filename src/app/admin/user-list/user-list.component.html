@@ -1,5 +1,6 @@
 <div class="container">
   <h2>User List</h2>
+  <button class="btn btn-primary mb-3" (click)="openCreateModal()">Crear Usuario</button>
   <table class="table">
     <thead>
       <tr>
@@ -23,42 +24,4 @@
       </tr>
     </tbody>
   </table>
-
-  <!-- Modal de edición -->
-  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editModalLabel">Editar Usuario</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="nombres" class="form-label">Nombres</label>
-              <input type="text" class="form-control" id="nombres" [(ngModel)]="selectedUser.nombres" name="nombres">
-            </div>
-            <div class="mb-3">
-              <label for="apellidop" class="form-label">Apellido Paterno</label>
-              <input type="text" class="form-control" id="apellidop" [(ngModel)]="selectedUser.apellidop"
-                name="apellidop">
-            </div>
-            <div class="mb-3">
-              <label for="apellidom" class="form-label">Apellido Materno</label>
-              <input type="text" class="form-control" id="apellidom" [(ngModel)]="selectedUser.apellidom"
-                name="apellidom">
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" [(ngModel)]="selectedUser.email" name="email">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" (click)="saveUser()">Guardar</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
+</div>

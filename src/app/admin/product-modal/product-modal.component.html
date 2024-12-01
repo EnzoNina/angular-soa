@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>{{ data.product.id ? 'Editar Producto' : 'Crear Producto' }}</h1>
+<div mat-dialog-content>
+  <form>
+    <div class="mb-3">
+      <label for="productName" class="form-label">Nombre del Producto</label>
+      <input type="text" class="form-control" id="productName" [(ngModel)]="data.product.nombre" name="nombre">
+    </div>
+    <div class="mb-3">
+      <label for="productDescription" class="form-label">Descripción del Producto</label>
+      <input type="text" class="form-control" id="productDescription" [(ngModel)]="data.product.descripcion" name="descripcion">
+    </div>
+    <div class="mb-3">
+      <label for="productPrice" class="form-label">Precio</label>
+      <input type="number" class="form-control" id="productPrice" [(ngModel)]="data.product.precio" name="precio">
+    </div>
+    <div class="mb-3">
+      <label for="productCategory" class="form-label">Categoría</label>
+      <select class="form-control" id="productCategory" [(ngModel)]="data.product.categoriaId" name="categoriaId">
+        <option *ngFor="let category of data.categorias" [value]="category.id">{{ category.nombre }}</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="productStock" class="form-label">Stock</label>
+      <input type="number" class="form-control" id="productStock" [(ngModel)]="data.product.stock" name="stock">
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="true">Guardar</button>
+</div>

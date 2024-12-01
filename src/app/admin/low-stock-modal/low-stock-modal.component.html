@@ -1,0 +1,15 @@
+<div class="custom-modal-width">
+    <h1 mat-dialog-title>Productos bajos de stock</h1>
+    <div mat-dialog-content class="low-stock-content">
+        <p>Estos productos están bajos de stock:</p>
+        <ul>
+            <li *ngFor="let product of data.products" class="product-item">
+                <span class="product-name">{{ product.nombre }}</span>
+                <span class="product-stock">(Stock: {{ product.stock }})</span>
+            </li>
+        </ul>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button color="primary" (click)="onNoClick()">Cerrar</button>
+    </div>
+</div>

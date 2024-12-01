@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>{{ data.category.id ? 'Editar Categoría' : 'Crear Categoría' }}</h1>
+<div mat-dialog-content>
+  <form>
+    <div class="mb-3">
+      <label for="categoryNombre" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="categoryNombre" [(ngModel)]="data.category.nombre" name="nombre">
+    </div>
+    <div class="mb-3">
+      <label for="categoryDescripcion" class="form-label">Descripción</label>
+      <input type="text" class="form-control" id="categoryDescripcion" [(ngModel)]="data.category.descripcion" name="descripcion">
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="true">Guardar</button>
+</div>
