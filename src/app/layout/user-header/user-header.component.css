@@ -1,0 +1,21 @@
+.navbar {
+  background-color: #f8f9fa;
+}
+
+.nav-link {
+  color: #343a40 !important;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: #007bff !important;
+}
+
+.nav-icon {
+  cursor: pointer;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.5em 0.75em;
+}

@@ -1,17 +1,15 @@
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, switchMap } from 'rxjs/operators';
-import { CookieService } from 'ngx-cookie-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { CartService } from './cart.service';
-import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthService {
   private baseUrl = environment.auth_url;
   private userUrl = environment.users_url;
@@ -19,29 +17,29 @@ export class AuthService {
   private rolesSubject = new BehaviorSubject<string[]>([]);
   roles$ = this.rolesSubject.asObservable();
 
-  constructor(private http: HttpClient, private cookieService: CookieService, private cartService: CartService) {
+  constructor(private http: HttpClient, private cartService: CartService) {
   }
 
   login(email: string, password: string): Observable<{ token: string, usuario: any }> {
     const loginData = { email, password };
     return this.http.post<{ token: string, usuario: any }>(`${this.baseUrl}/login`, loginData).pipe(
       tap(response => {
-        // Limpiar todas las cookies antes de establecer las nuevas
-        this.cookieService.deleteAll();
+        // Limpiar el localStorage antes de establecer los nuevos valores
+        localStorage.clear();
         const roles = response.usuario.roles ? [response.usuario.roles] : [];
         this.rolesSubject.next(roles);
-        this.cookieService.set('jwt', response.token);
-        this.cookieService.set('roles', JSON.stringify(roles));
+        localStorage.setItem('jwt', response.token);
+        localStorage.setItem('roles', JSON.stringify(roles));
       }),
       switchMap(() => this.cartService.createCartIfNotExists())
     );
   }
 
   getRoles(): string[] {
-    const rolesCookie = this.cookieService.get('roles');
-    if (rolesCookie) {
+    const roles = localStorage.getItem('roles');
+    if (roles) {
       try {
-        return JSON.parse(rolesCookie);
+        return JSON.parse(roles);
       } catch (error) {
         console.error('Error al decodificar los roles:', error);
         return [];
@@ -51,7 +49,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    const token = this.cookieService.get('jwt');
+    const token = localStorage.getItem('jwt');
     return token ? !this.jwtHelper.isTokenExpired(token) : false;
   }
 
@@ -72,4 +70,7 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/reset-password`, { correo, codigo, password });
   }
 
+  logout(): void {
+    localStorage.clear();
+  }
 }

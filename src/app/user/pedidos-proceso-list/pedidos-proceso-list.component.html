@@ -1,0 +1,10 @@
+<div class="pedidos-proceso-list-container">
+    <h1>Pedidos en Proceso</h1>
+    <div *ngIf="pedidos.length === 0">No hay pedidos pendientes.</div>
+    <ul>
+        <li *ngFor="let pedido of pedidos">
+            <span>{{ pedido.id }} - {{ pedido.fechaPedido }} - {{ pedido.montoTotal }}</span>
+            <button (click)="confirmarPedido(pedido.id)">Confirmar Pedido</button>
+        </li>
+    </ul>
+</div>

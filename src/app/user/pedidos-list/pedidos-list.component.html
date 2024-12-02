@@ -1,0 +1,27 @@
+<div class="pedidos-list-container">
+  <h1>Lista de Pedidos</h1>
+  <div *ngIf="pedidos.length === 0">No hay pedidos disponibles.</div>
+  <ul>
+    <li *ngFor="let pedido of pedidos">
+      <span>{{ pedido.id }} - {{ pedido.fechaPedido }} - {{ pedido.montoTotal }}</span>
+      <button (click)="viewPedido(pedido.id)">Ver</button>
+      <button (click)="deletePedido(pedido.id)">Eliminar</button>
+      <button (click)="verEstadoPedido(pedido.id)">Ver Estado Pedido</button>
+    </li>
+  </ul>
+
+  <div *ngIf="selectedPedido">
+    <h2>Detalles del Pedido</h2>
+    <p>ID: {{ selectedPedido.id }}</p>
+    <p>Usuario ID: {{ selectedPedido.usuarioId }}</p>
+    <p>Fecha: {{ selectedPedido.fechaPedido }}</p>
+    <p>Monto Total: {{ selectedPedido.montoTotal }}</p>
+    <p>Estado: {{ selectedPedido.estado }}</p>
+    <p>Dirección de Envío: {{ selectedPedido.direccionEnvio }}</p>
+  </div>
+
+  <div *ngIf="pedidoEstado">
+    <h2>Estado del Pedido</h2>
+    <p>{{ pedidoEstado }}</p>
+  </div>
+</div>

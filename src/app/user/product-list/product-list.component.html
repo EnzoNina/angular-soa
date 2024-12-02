@@ -1,8 +1,14 @@
-<div class="product-list-container">
-  <h2>Lista de Productos</h2>
-  <div *ngFor="let product of products" class="product-item">
-    <p>{{ product.nombre }}</p>
-    <p>{{ product.precio }}</p>
-    <button (click)="addToCart(product.id)">Agregar al Carrito</button>
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Lista de Productos</h2>
+  <div class="row">
+    <div *ngFor="let product of products" class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ product.nombre }}</h5>
+          <p class="card-text">S/. {{ product.precio }}</p>
+          <button class="btn btn-primary" (click)="addToCart(product.id)">Agregar al Carrito</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

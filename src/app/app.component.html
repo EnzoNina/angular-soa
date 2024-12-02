@@ -1,5 +1,6 @@
 <ng-container *ngIf="!isAdminRoute && showHeaderFooter">
-  <app-header></app-header>
+  <app-header *ngIf="!isAuthenticated()"></app-header>
+  <app-user-header *ngIf="isAuthenticated()"></app-user-header>
 </ng-container>
 <ng-container *ngIf="isAdminRoute">
   <app-admin-header></app-admin-header>

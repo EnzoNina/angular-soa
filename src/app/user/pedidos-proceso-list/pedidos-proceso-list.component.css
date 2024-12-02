@@ -1,0 +1,19 @@
+.pedidos-proceso-list-container {
+  padding: 20px;
+}
+
+.pedidos-proceso-list-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.pedidos-proceso-list-container li {
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pedidos-proceso-list-container button {
+  margin-left: 10px;
+}

@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Agregar al Carrito</h1>
+<div mat-dialog-content>
+  <p>Producto: {{ data.product.nombre }}</p>
+  <mat-form-field>
+    <mat-label>Cantidad</mat-label>
+    <input matInput [(ngModel)]="cantidad" type="number" min="1">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button (click)="onAddClick()">Agregar</button>
+</div>

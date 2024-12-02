@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../core/services/cart.service';
 import { ProductService } from '../../core/services/product.service';
+import { MatDialog } from '@angular/material/dialog';
 import { NgFor } from '@angular/common';
+import { ProductQuantityModalComponent } from '../product-quantity-modal/product-quantity-modal.component';
 
 @Component({
   selector: 'app-product-list',
@@ -12,7 +14,7 @@ import { NgFor } from '@angular/common';
 export class ProductListComponent implements OnInit {
   products: any[] = [];
 
-  constructor(private productService: ProductService, private cartService: CartService) { }
+  constructor(private productService: ProductService, private cartService: CartService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadProducts();
@@ -25,9 +27,20 @@ export class ProductListComponent implements OnInit {
   }
 
   addToCart(productId: number): void {
-    const cartId = this.cartService.getCartId();
-    this.cartService.addProductToCart(cartId, productId, 1).subscribe(() => {
-      console.log('Producto agregado al carrito');
+    const product = this.products.find(p => p.id === productId);
+    const dialogRef = this.dialog.open(ProductQuantityModalComponent, {
+      width: '250px',
+      data: { product }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const cartId = +localStorage.getItem('cartId')!;
+        console.log('Agregando producto al carrito', cartId, productId, result);        
+        this.cartService.addProductToCart(cartId, productId, result).subscribe(() => {
+          console.log('Producto agregado al carrito');
+        });
+      }
     });
   }
 }

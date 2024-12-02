@@ -12,6 +12,7 @@ export class UserUtilsService {
     constructor(private http: HttpClient) { }
 
     findUserByEmail(email: string): Observable<any> {
-        return this.http.get<any>(`${this.userUrl}/findByEmail/${email}`);
+        const url = `${this.userUrl}/email?email=${email}`;
+        return this.http.get<any>(url);
     }
 }

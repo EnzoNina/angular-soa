@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-admin-header',
@@ -9,10 +8,10 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AdminHeaderComponent {
 
-  constructor(private cookieService: CookieService, private router: Router) {}
+  constructor(private router: Router) {}
 
   logout(): void {
-    this.cookieService.deleteAll();
-    this.router.navigate(['/login']);
+    localStorage.clear();
+    this.router.navigate(['/auth/login']);
   }
 }

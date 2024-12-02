@@ -20,5 +20,12 @@ export class ProductService {
     );
   }
 
+  // Obtener detalles de un producto por su ID
+getProductById(productId: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/${productId}`).pipe(
+    tap(response => console.log('Producto obtenido:', response))
+  );
+}
+
 
 }
