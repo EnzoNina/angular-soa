@@ -1,5 +1,9 @@
 <div class="container">
   <h2>Lista de Categorías</h2>
+  <div class="mb-3">
+    <input type="text" class="form-control" placeholder="Buscar por ID" [(ngModel)]="searchCategoryId">
+    <button class="btn btn-primary mt-2" (click)="searchCategoryById()">Buscar</button>
+  </div>
   <button class="btn btn-primary mb-3" (click)="openCreateModal()">Crear Categoría</button>
   <table class="table table-striped">
     <thead>

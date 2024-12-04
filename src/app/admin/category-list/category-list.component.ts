@@ -15,6 +15,7 @@ import { CategoryModalComponent } from '../category-modal/category-modal.compone
 export class CategoryListComponent implements OnInit {
   categories: any[] = [];
   selectedCategory: any = {};
+  searchCategoryId: string = '';
 
   constructor(
     private adminCategoryService: AdminCategoryService,
@@ -30,6 +31,17 @@ export class CategoryListComponent implements OnInit {
       this.categories = categories;
     });
   }
+
+  searchCategoryById(): void {
+    if (this.searchCategoryId) {
+      this.adminCategoryService.getCategoriaById(Number(this.searchCategoryId)).subscribe(category => {
+        this.categories = [category];
+      });
+    } else {
+      this.getAllCategories();
+    }
+  }
+
   openCreateModal(): void {
     this.selectedCategory = { nombre: '', descripcion: '' }; // Inicializa una nueva categoría
     const dialogRef = this.dialog.open(CategoryModalComponent, {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PedidoService } from '../../core/services/pedido.service';
 import { NgFor, NgIf } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pedidos-list',
@@ -40,6 +41,13 @@ export class PedidosListComponent implements OnInit {
   verEstadoPedido(id: number): void {
     this.pedidoService.getPedidoEstado(id).subscribe(estado => {
       this.pedidoEstado = estado;
+    });
+  }
+
+  repeatLastPedido(usuarioId: number): void {
+    this.pedidoService.repeatLastPedido(usuarioId).subscribe(() => {
+      Swal.fire('Éxito', 'El pedido fue repetido con éxito', 'success');
+      this.loadPedidos();
     });
   }
 }

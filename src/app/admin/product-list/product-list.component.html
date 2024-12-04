@@ -1,6 +1,7 @@
 <div class="container">
   <h2>Product List</h2>
   <button class="btn btn-primary mb-3" (click)="openCreateModal()">Crear Producto</button>
+  <button class="btn btn-secondary mb-3" (click)="listarReservas()">Listar Reservas</button>
   <table class="table">
     <thead>
       <tr>
@@ -20,12 +21,13 @@
         <td>{{ product.descripcion }}</td>
         <td>{{ product.precio }}</td>
         <td>{{ product.stock }}</td>
-        <td>{{ product.categoria.nombre }}</td>
+        <td>{{ product.categoriaNombre }}</td>
         <td>
           <button class="btn btn-primary" (click)="openEditModal(product)">Editar</button>
           <button class="btn btn-warning" (click)="openStockModal(product)">Actualizar Stock</button>
           <button class="btn btn-danger" (click)="deleteProduct(product.id)">Eliminar</button>
           <button class="btn btn-secondary" (click)="markProductAsOutOfStock(product.id)">Marcar como Agotado</button>
+          <button class="btn btn-info" (click)="consultarExistencias(product.id)">Consultar Existencias</button>
         </td>
       </tr>
     </tbody>

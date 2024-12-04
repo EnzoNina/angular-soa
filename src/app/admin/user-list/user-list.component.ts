@@ -15,6 +15,7 @@ import { UserModalComponent } from '../user-modal/user-modal.component';
 export class UserListComponent implements OnInit {
   users: any[] = [];
   selectedUser: any = {};
+  searchUserId: string = '';
 
   constructor(
     private adminUserService: AdminUserService,
@@ -27,12 +28,32 @@ export class UserListComponent implements OnInit {
 
   getAllUsers(): void {
     this.adminUserService.getAllUsers().subscribe(users => {
-      this.users = users;
+      this.users = users
+        .filter((user: any) => user.activo) // Filtrar usuarios activos
+        .map((user: any) => {
+          const [apellidop, apellidom] = user.apellido.split(' ');
+          return { ...user, apellidop, apellidom };
+        });
     });
   }
 
+  searchUserById(): void {
+    if (this.searchUserId) {
+      this.adminUserService.getUserById(this.searchUserId).subscribe(user => {
+        if (user.activo) { // Verificar si el usuario está activo
+          const [apellidop, apellidom] = user.apellido.split(' ');
+          this.users = [{ ...user, apellidop, apellidom }];
+        } else {
+          this.users = [];
+        }
+      });
+    } else {
+      this.getAllUsers();
+    }
+  }
+
   openCreateModal(): void {
-    this.selectedUser = { nombres: '', apellidop: '', apellidom: '', email: '', password: '', cuenta_verificada: false, activo: false }; // Inicializa un nuevo usuario
+    this.selectedUser = { nombres: '', apellidop: '', apellidom: '', email: '', password: '', direccion: '' }; // Inicializa un nuevo usuario
     const dialogRef = this.dialog.open(UserModalComponent, {
       data: { user: this.selectedUser }
     });
@@ -58,13 +79,29 @@ export class UserListComponent implements OnInit {
   }
 
   createUser(): void {
-    this.adminUserService.createUser(this.selectedUser).subscribe(() => {
+    const user = { 
+      nombres: this.selectedUser.nombres,
+      apellidop: this.selectedUser.apellidop,
+      apellidom: this.selectedUser.apellidom,
+      email: this.selectedUser.email,
+      password: this.selectedUser.password,
+      direccion: this.selectedUser.direccion
+    };
+    this.adminUserService.createUser(user).subscribe(() => {
       this.getAllUsers();
     });
   }
 
   saveUser(): void {
-    this.adminUserService.editUser(this.selectedUser.id, this.selectedUser).subscribe(() => {
+    const user = { 
+      nombres: this.selectedUser.nombres,
+      apellidop: this.selectedUser.apellidop,
+      apellidom: this.selectedUser.apellidom,
+      email: this.selectedUser.email,
+      password: this.selectedUser.password,
+      direccion: this.selectedUser.direccion
+    };
+    this.adminUserService.editUser(this.selectedUser.id, user).subscribe(() => {
       this.getAllUsers();
     });
   }

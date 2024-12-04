@@ -1,0 +1,18 @@
+<div>
+  <h2>Iniciar Proceso de Pago</h2>
+  <form (ngSubmit)="iniciarPago(pagoForm.value)" #pagoForm="ngForm">
+    <div>
+      <label for="pedidoId">Pedido ID:</label>
+      <input type="number" id="pedidoId" name="pedidoId" ngModel required>
+    </div>
+    <div>
+      <label for="metodoPagoId">Método de Pago ID:</label>
+      <input type="number" id="metodoPagoId" name="metodoPagoId" ngModel required>
+    </div>
+    <div>
+      <label for="monto">Monto:</label>
+      <input type="number" id="monto" name="monto" ngModel required>
+    </div>
+    <button type="submit">Iniciar Pago</button>
+  </form>
+</div>

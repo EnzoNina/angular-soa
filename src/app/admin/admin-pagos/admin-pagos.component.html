@@ -1,0 +1,18 @@
+<div>
+  <h2>Historial de Pagos</h2>
+  <ul>
+    <li *ngFor="let pago of historialPagos" (click)="consultarDetallesPago(pago.id)">
+      Pago ID: {{ pago.id }}, Monto: {{ pago.monto }}, Estado: {{ pago.estado }}
+    </li>
+  </ul>
+
+  <div *ngIf="detallesPago">
+    <h3>Detalles del Pago</h3>
+    <p>ID: {{ detallesPago.id }}</p>
+    <p>Pedido ID: {{ detallesPago.pedidoId }}</p>
+    <p>Método de Pago ID: {{ detallesPago.metodoPagoId }}</p>
+    <p>Monto: {{ detallesPago.monto }}</p>
+    <p>Fecha de Pago: {{ detallesPago.fechaPago }}</p>
+    <p>Estado: {{ detallesPago.estado }}</p>
+  </div>
+</div><p>admin-pagos works!</p>

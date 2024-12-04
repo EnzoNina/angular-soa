@@ -28,4 +28,10 @@ export class PedidosProcesoListComponent implements OnInit {
       this.loadPedidosPendientes();
     });
   }
+
+  cancelarPedido(id: number): void {
+    this.pedidoService.cancelPedido(id).subscribe(() => {
+      this.loadPedidosPendientes();
+    });
+  }
 }

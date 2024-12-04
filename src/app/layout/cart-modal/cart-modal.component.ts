@@ -38,7 +38,7 @@ export class CartModalComponent implements OnInit {
   goToCheckout(): void {
     console.log('Go to checkout');
     this.dialogRef.close();
-    this.router.navigate(['/checkout']);
+    this.router.navigate(['user/checkout']);
   }
 
   updateQuantity(cartDetailId: number, quantity: number): void {
@@ -46,10 +46,28 @@ export class CartModalComponent implements OnInit {
       this.loadCart();
     });
   }
-  
-  removeFromCart(cartDetailId: number): void {
-    this.cartService.removeProductFromCart(cartDetailId).subscribe(() => {
+
+  removeFromCart(productoId: number): void {
+    const cartId = +localStorage.getItem('cartId')!;
+    this.cartService.removeProductFromCart(cartId, productoId).subscribe(() => {
       this.loadCart();
+    });
+  }
+
+  deleteCart(): void {
+    const cartId = +localStorage.getItem('cartId')!;
+    this.cartService.deleteCart(cartId).subscribe(() => {
+      console.log('Carrito eliminado');
+      localStorage.removeItem('cartId');
+      this.dialogRef.close();
+    });
+  }
+
+  saveCart(): void {
+    const cartId = +localStorage.getItem('cartId')!;
+    this.cartService.saveCart(cartId).subscribe(() => {
+      console.log('Carrito guardado');
+      this.dialogRef.close();
     });
   }
 

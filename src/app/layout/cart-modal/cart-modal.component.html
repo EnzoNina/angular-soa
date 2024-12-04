@@ -5,7 +5,7 @@
     <p>{{ item.producto.nombre }} - {{ item.cantidad }}</p>
     <input type="number" [(ngModel)]="item.cantidad" min="1">
     <button mat-button color="primary" (click)="updateQuantity(item.id, item.cantidad)">Actualizar</button>
-    <button mat-button color="warn" (click)="removeFromCart(item.id)">Quitar</button>
+    <button mat-button color="warn" (click)="removeFromCart(item.producto.id)">Quitar</button>
   </div>
   <div class="cart-summary">
     <p>Subtotal: S/. {{ cart.subtotal }}</p>
@@ -16,4 +16,6 @@
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cerrar</button>
   <button mat-button (click)="goToCheckout()">Pagar</button>
+  <button mat-button color="warn" (click)="deleteCart()">Eliminar Carrito</button>
+  <button mat-button color="primary" (click)="saveCart()">Guardar Carrito</button>
 </div>

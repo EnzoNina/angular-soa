@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminProductService } from '../../core/services/admin-product.service';
-import { InventarioService } from '../../core/services/admin-inventario.service';
+import { AdminInventarioService } from '../../core/services/admin-inventario.service';
 import { FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NgFor } from '@angular/common';
@@ -13,7 +13,7 @@ import { LowStockModalComponent } from '../low-stock-modal/low-stock-modal.compo
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.css',
+  styleUrls: ['./product-list.component.css'],
   imports: [FormsModule, NgFor, MatDialogModule]
 })
 export class ProductListComponent implements OnInit {
@@ -25,7 +25,7 @@ export class ProductListComponent implements OnInit {
   constructor(
     private adminProductService: AdminProductService,
     private adminCategoriesService: AdminCategoryService,
-    private inventarioService: InventarioService,
+    private adminInventarioService: AdminInventarioService,
     private dialog: MatDialog
   ) { }
 
@@ -48,7 +48,7 @@ export class ProductListComponent implements OnInit {
   }
 
   checkLowStockProducts(): void {
-    this.inventarioService.consultarProductosBajoStock(100).subscribe(products => {
+    this.adminInventarioService.consultarProductosBajoStock(100).subscribe(products => {
       if (products.length > 0) {
         this.dialog.open(LowStockModalComponent, {
           data: { products: products }
@@ -92,11 +92,11 @@ export class ProductListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result.action === 'add') {
-          this.inventarioService.agregarExistencias(this.selectedProduct.id, result.cantidad).subscribe(() => {
+          this.adminInventarioService.agregarExistencias(this.selectedProduct.id, result.cantidad).subscribe(() => {
             this.getAllProducts();
           });
         } else if (result.action === 'reduce') {
-          this.inventarioService.reducirExistencias(this.selectedProduct.id, result.cantidad).subscribe(() => {
+          this.adminInventarioService.reducirExistencias(this.selectedProduct.id, result.cantidad).subscribe(() => {
             this.getAllProducts();
           });
         }
@@ -135,7 +135,6 @@ export class ProductListComponent implements OnInit {
   }
 
   markProductAsOutOfStock(productId: number): void {
-
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'No podrás revertir esto',
@@ -145,13 +144,39 @@ export class ProductListComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.inventarioService.marcarProductoComoAgotado(productId).subscribe(() => {
+        this.adminInventarioService.marcarProductoComoAgotado(productId).subscribe(() => {
           Swal.fire('Agotado', 'El producto ha sido marcado como agotado.', 'success');
           this.getAllProducts();
         });
       }
     });
+  }
 
+  consultarExistencias(productId: number): void {
+    this.adminInventarioService.consultarExistenciasPorId(productId).subscribe(response => {
+      Swal.fire({
+        title: 'Existencias del Producto',
+        text: `El producto tiene ${response} existencias.`,
+        icon: 'info',
+        confirmButtonText: 'Cerrar'
+      });
+    });
+  }
 
+  listarReservas(): void {
+    this.adminInventarioService.listarReservas().subscribe(reservas => {
+      let reservasHtml = '<ul>';
+      reservas.forEach((reserva: any) => {
+        reservasHtml += `<li>ID: ${reserva.id}, Producto ID: ${reserva.productoId}, Cantidad: ${reserva.cantidad}, Pedido ID: ${reserva.pedidoId}, Fecha Reserva: ${reserva.fechaReserva}, Estado: ${reserva.estado}</li>`;
+      });
+      reservasHtml += '</ul>';
+
+      Swal.fire({
+        title: 'Lista de Reservas',
+        html: reservasHtml,
+        icon: 'info',
+        confirmButtonText: 'Cerrar'
+      });
+    });
   }
 }

@@ -17,11 +17,12 @@ export class RegisterComponent {
   apellidom: string = ''; // ApeM
   email: string = '';
   password: string = '';
+  direccion: string = ''; // Dirección
 
   constructor(private authService: AuthService, private router:Router) { }
 
   register() {
-    this.authService.register(this.name, this.apellidop, this.apellidom, this.email, this.password).pipe(
+    this.authService.register(this.name, this.apellidop, this.apellidom, this.email, this.password, this.direccion).pipe(
       tap(response => {
         console.log('Data', this.email);
         console.log('Registration successful', response);

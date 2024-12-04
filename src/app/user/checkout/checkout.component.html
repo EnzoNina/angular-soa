@@ -15,4 +15,9 @@
   </div>
   <button (click)="placeOrder()">Realizar Pedido</button>
   <button (click)="vaciarCarrito()">Vaciar Carrito</button>
+
+  <div class="address-section" *ngIf="usuario">
+    <h2>Dirección de Envío</h2>
+    <p>{{ usuario.direccion }}</p>
+  </div>  
 </div>

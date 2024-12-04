@@ -13,7 +13,7 @@ export class UserModalComponent {
   constructor(
     public dialogRef: MatDialogRef<UserModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   onNoClick(): void {
     this.dialogRef.close();

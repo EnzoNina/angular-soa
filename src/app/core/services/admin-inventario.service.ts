@@ -6,40 +6,44 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class InventarioService {
-  private baseUrl = environment.inventario_url;
+export class AdminInventarioService {
+  private baseUrl = `${environment.inventario_url}`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  agregarExistencias(id: number, cantidad: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/producto/${id}/agregar`, null, { params: { cantidad: cantidad.toString() } });
+  agregarExistencias(productoId: number, cantidad: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${productoId}/agregar`, null, { params: { cantidad: cantidad.toString() } });
   }
 
-  reducirExistencias(id: number, cantidad: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/producto/${id}/reducir`, null, { params: { cantidad: cantidad.toString() } });
+  reducirExistencias(productoId: number, cantidad: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${productoId}/reducir`, null, { params: { cantidad: cantidad.toString() } });
   }
 
-  consultarProducto(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/producto/${id}`);
+  consultarProducto(productoId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${productoId}`);
+  }
+
+  consultarExistenciasPorId(productoId: number): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/${productoId}/existencias`);
   }
 
   consultarProductosBajoStock(limite: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/bajo-stock`, { params: { limite: limite.toString() } });
+    return this.http.get(`${this.baseUrl}/bajo-inventario`, { params: { limite: limite.toString() } });
   }
 
   reservarInventario(request: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/reservar`, request);
+    return this.http.post(`${this.baseUrl}`, request);
   }
 
-  liberarInventario(reservaId: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/liberar`, null, { params: { reservaId: reservaId.toString() } });
+  liberarInventario(reservaId: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${reservaId}/liberar`, null);
   }
 
-  marcarProductoComoAgotado(id: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/producto/${id}/agotado`, null);
+  marcarProductoComoAgotado(productoId: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${productoId}/agotado`, null);
   }
 
   listarReservas(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/reservas`);
+    return this.http.get(`${this.baseUrl}`);
   }
 }

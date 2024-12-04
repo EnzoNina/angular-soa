@@ -54,4 +54,8 @@ export class PedidoService {
     getPedidosPendientes(): Observable<any> {
         return this.http.get(`${this.baseUrl}/estado/pendiente`);
     }
+
+    repeatLastPedido(usuarioId: number): Observable<any> {
+        return this.http.post(`${this.baseUrl}/repeat-last/${usuarioId}`, {});
+    }
 }

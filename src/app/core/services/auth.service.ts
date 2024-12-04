@@ -11,8 +11,7 @@ import { CartService } from './cart.service';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = environment.auth_url;
-  private userUrl = environment.users_url;
+  private baseUrl = environment.auth_url;  
   private jwtHelper = new JwtHelperService();
   private rolesSubject = new BehaviorSubject<string[]>([]);
   roles$ = this.rolesSubject.asObservable();
@@ -53,7 +52,7 @@ export class AuthService {
     return token ? !this.jwtHelper.isTokenExpired(token) : false;
   }
 
-  register(nombres: string, apellidop: string, apellidom: string, email: string, password: string): Observable<any> {
+  register(nombres: string, apellidop: string, apellidom: string, email: string, password: string, direccion: string): Observable<any> {
     const registerData = { nombres, apellidop, apellidom, email, password };
     return this.http.post(`${this.baseUrl}/register`, registerData);
   }

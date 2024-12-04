@@ -28,6 +28,11 @@ export class CartService {
       return of({ id: this.cartId });
     }
 
+    const roles = this.getRolesFromLocalStorage();
+    if (!roles.includes('ROLE_USER')) {
+      return of(null);
+    }
+
     return this.getUserIdFromToken().pipe(
       switchMap(userId => {
         if (!userId) {
@@ -113,12 +118,20 @@ export class CartService {
     return this.http.put(`${this.baseUrl}/producto/${cartDetailId}?cantidad=${quantity}`, {});
   }
 
-  removeProductFromCart(cartDetailId: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/producto/${cartDetailId}`);
+  removeProductFromCart(carritoId: number, productoId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${carritoId}/producto/${productoId}`);
   }
 
   clearCart(cartId: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${cartId}/vaciar`);
+  }
+
+  deleteCart(cartId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${cartId}`);
+  }
+
+  saveCart(cartId: number): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${cartId}/guardar`, {});
   }
 
   private getUserIdFromToken(): Observable<number | null> {
@@ -136,5 +149,18 @@ export class CartService {
         user ? user.id : null
       )
     );
+  }
+
+  private getRolesFromLocalStorage(): string[] {
+    const roles = localStorage.getItem('roles');
+    if (roles) {
+      try {
+        return JSON.parse(roles);
+      } catch (error) {
+        console.error('Error al decodificar los roles:', error);
+        return [];
+      }
+    }
+    return [];
   }
 }

@@ -1,22 +1,30 @@
 <div class="container">
-  <h2>User List</h2>
+  <h2>Lista de Usuarios</h2>
+  <div class="mb-3">
+    <input type="text" class="form-control" placeholder="Buscar por ID" [(ngModel)]="searchUserId">
+    <button class="btn btn-primary mt-2" (click)="searchUserById()">Buscar</button>
+  </div>
   <button class="btn btn-primary mb-3" (click)="openCreateModal()">Crear Usuario</button>
   <table class="table">
     <thead>
       <tr>
+        <th>ID</th>
         <th>Nombres</th>
         <th>Apellido Paterno</th>
         <th>Apellido Materno</th>
         <th>Email</th>
+        <th>Dirección</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let user of users">
-        <td>{{ user.nombres }}</td>
+        <td>{{ user.id }}</td>
+        <td>{{ user.nombre }}</td>
         <td>{{ user.apellidop }}</td>
         <td>{{ user.apellidom }}</td>
         <td>{{ user.email }}</td>
+        <td>{{ user.direccion }}</td>
         <td>
           <button class="btn btn-primary" (click)="openEditModal(user)">Editar</button>
           <button class="btn btn-danger" (click)="deleteUser(user.id)">Eliminar</button>

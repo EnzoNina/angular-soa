@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
+import { Router } from '@angular/router';
+import { PedidoService } from '../../core/services/pedido.service';
+import { UserUtilsService } from '../../core/services/user-utils.service';
 import { NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PedidoService } from '../../core/services/pedido.service';
 
 @Component({
   selector: 'app-checkout',
@@ -15,8 +16,15 @@ export class CheckoutComponent implements OnInit {
   cart: any;
   cartItems: any[] = [];
   codigoCupon: string = '';
+  showAddressFormFlag: boolean = false;
+  usuario: any;
 
-  constructor(private cartService: CartService, private router: Router, private pedidoService: PedidoService) { }
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+    private pedidoService: PedidoService,
+    private userUtilsService: UserUtilsService
+  ) { }
 
   ngOnInit(): void {
     this.loadCart();
@@ -25,8 +33,16 @@ export class CheckoutComponent implements OnInit {
   loadCart(): void {
     const cartId = +localStorage.getItem('cartId')!;
     this.cartService.getCartWithProducts(cartId).subscribe(cart => {
+      console.log(cart);
       this.cart = cart;
       this.cartItems = cart.productos;
+      this.loadUser(cart.usuarioId);
+    });
+  }
+
+  loadUser(usuarioId: number): void {
+    this.userUtilsService.getUserById(usuarioId.toString()).subscribe(user => {
+      this.usuario = user;
     });
   }
 
@@ -46,9 +62,15 @@ export class CheckoutComponent implements OnInit {
 
   placeOrder(): void {
     const cartId = +localStorage.getItem('cartId')!;
-    this.pedidoService.createPedidoFromCarrito(cartId).subscribe(response => {
+    const pedidoRequest = {
+      usuarioId: this.cart.usuarioId,
+      montoTotal: this.cart.total,
+      estado: 'Pendiente',
+      direccionEnvio: this.usuario.direccion
+    };
+    this.pedidoService.createPedido(pedidoRequest).subscribe(response => {
       console.log('Pedido creado con éxito', response);
-      this.router.navigate(['/order-confirmation']);
+      this.router.navigate(['/pago']);
     });
   }
 }

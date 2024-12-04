@@ -5,6 +5,7 @@ import { RoleGuard } from '../core/guards/role.guard';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { PedidosListComponent } from './pedidos-list/pedidos-list.component';
 import { PedidosProcesoListComponent } from './pedidos-proceso-list/pedidos-proceso-list.component';
+import { PagoComponent } from './pago/pago.component';
 
 
 export const USER_ROUTES: Routes = [
@@ -23,6 +24,9 @@ export const USER_ROUTES: Routes = [
     },
     {
         path: 'pedidos-proceso', component: PedidosProcesoListComponent, canActivate: [RoleGuard], data: { expectedRoles: ['ROLE_USER'] },
+    },
+    {
+        path: 'pago', component: PagoComponent, canActivate: [RoleGuard], data: { expectedRoles: ['ROLE_USER'] },
     }
 
 ];

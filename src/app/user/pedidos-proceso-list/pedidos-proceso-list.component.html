@@ -5,6 +5,7 @@
         <li *ngFor="let pedido of pedidos">
             <span>{{ pedido.id }} - {{ pedido.fechaPedido }} - {{ pedido.montoTotal }}</span>
             <button (click)="confirmarPedido(pedido.id)">Confirmar Pedido</button>
+            <button (click)="cancelarPedido(pedido.id)">Cancelar Pedido</button>
         </li>
     </ul>
 </div>
