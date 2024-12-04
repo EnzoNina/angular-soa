@@ -2,18 +2,32 @@
   padding: 20px;
 }
 
-.pedidos-list-container ul {
-  list-style-type: none;
-  padding: 0;
+.pedidos-list-container .list-group-item {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: box-shadow 0.3s;
 }
 
-.pedidos-list-container li {
-  margin: 10px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.pedidos-list-container .list-group-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pedidos-list-container .list-group-item h5 {
+  margin: 0;
+}
+
+.pedidos-list-container .list-group-item p {
+  margin: 0;
 }
 
 .pedidos-list-container button {
   margin-left: 10px;
+}
+
+.mat-card {
+  margin-top: 10px;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

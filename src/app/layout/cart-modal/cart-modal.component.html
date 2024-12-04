@@ -1,21 +1,31 @@
-<h1 mat-dialog-title>Carrito de Compras</h1>
-<div mat-dialog-content>
-  <div *ngIf="cartItems.length === 0">El carrito está vacío.</div>
-  <div *ngFor="let item of cartItems">
-    <p>{{ item.producto.nombre }} - {{ item.cantidad }}</p>
-    <input type="number" [(ngModel)]="item.cantidad" min="1">
-    <button mat-button color="primary" (click)="updateQuantity(item.id, item.cantidad)">Actualizar</button>
-    <button mat-button color="warn" (click)="removeFromCart(item.producto.id)">Quitar</button>
+<div class="modal-container">
+  <h1 mat-dialog-title>Carrito de Compras</h1>
+  <div mat-dialog-content>
+    <div *ngIf="cartItems.length === 0" class="empty-cart">El carrito está vacío.</div>
+    <div *ngFor="let item of cartItems" class="cart-item">
+      <div class="item-details">
+        <p class="item-name">{{ item.producto.nombre }}</p>
+        <div class="item-quantity">
+          <input type="number" [(ngModel)]="item.cantidad" min="1" class="quantity-input">
+          <button mat-icon-button color="primary" (click)="updateQuantity(item.id, item.cantidad)">
+            <mat-icon>refresh</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="removeFromCart(item.producto.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="cart-summary">
+      <p>Subtotal: S/. {{ cart.subtotal }}</p>
+      <p>Descuento: S/. {{ cart.descuento }}</p>
+      <p>Total: S/. {{ cart.total }}</p>
+    </div>
   </div>
-  <div class="cart-summary">
-    <p>Subtotal: S/. {{ cart.subtotal }}</p>
-    <p>Descuento: S/. {{ cart.descuento }}</p>
-    <p>Total: S/. {{ cart.total }}</p>
+  <div mat-dialog-actions class="actions">
+    <button mat-raised-button color="warn" (click)="deleteCart()">Eliminar Carrito</button>
+    <button mat-raised-button color="primary" (click)="saveCart()">Guardar Carrito</button>
+    <button mat-raised-button color="accent" (click)="goToCheckout()">Pagar</button>
+    <button mat-raised-button (click)="onNoClick()">Cerrar</button>
   </div>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cerrar</button>
-  <button mat-button (click)="goToCheckout()">Pagar</button>
-  <button mat-button color="warn" (click)="deleteCart()">Eliminar Carrito</button>
-  <button mat-button color="primary" (click)="saveCart()">Guardar Carrito</button>
 </div>

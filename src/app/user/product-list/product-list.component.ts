@@ -4,6 +4,7 @@ import { ProductService } from '../../core/services/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NgFor } from '@angular/common';
 import { ProductQuantityModalComponent } from '../product-quantity-modal/product-quantity-modal.component';
+import { CartModalComponent } from '../../layout/cart-modal/cart-modal.component';
 
 @Component({
   selector: 'app-product-list',
@@ -13,11 +14,14 @@ import { ProductQuantityModalComponent } from '../product-quantity-modal/product
 })
 export class ProductListComponent implements OnInit {
   products: any[] = [];
+  cartItems: any[] = [];
+  cart: any = {};
 
   constructor(private productService: ProductService, private cartService: CartService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadProducts();
+    this.loadCart();
   }
 
   loadProducts(): void {
@@ -26,10 +30,18 @@ export class ProductListComponent implements OnInit {
     });
   }
 
+  loadCart(): void {
+    const cartId = +localStorage.getItem('cartId')!;
+    this.cartService.getCartWithProducts(cartId).subscribe(cart => {
+      this.cart = cart;
+      this.cartItems = cart.productos;
+    });
+  }
+
   addToCart(productId: number): void {
     const product = this.products.find(p => p.id === productId);
     const dialogRef = this.dialog.open(ProductQuantityModalComponent, {
-      width: '250px',
+      width: '400px', // Ajuste del tamaño del modal
       data: { product }
     });
 
@@ -40,6 +52,19 @@ export class ProductListComponent implements OnInit {
         this.cartService.addProductToCart(cartId, productId, result).subscribe(() => {
           console.log('Producto agregado al carrito');
         });
+      }
+    });
+  }
+
+  openCartModal(): void {
+    const dialogRef = this.dialog.open(CartModalComponent, {
+      width: '600px',
+      data: { cartItems: this.cartItems, cart: this.cart }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Lógica después de cerrar el modal
       }
     });
   }

@@ -1,28 +1,19 @@
-<div class="pedidos-list-container">
-  <h1>Lista de Pedidos</h1>
-  <div *ngIf="pedidos.length === 0">No hay pedidos disponibles.</div>
-  <ul>
-    <li *ngFor="let pedido of pedidos">
-      <span>{{ pedido.id }} - {{ pedido.fechaPedido }} - {{ pedido.montoTotal }}</span>
-      <button (click)="viewPedido(pedido.id)">Ver</button>
-      <button (click)="deletePedido(pedido.id)">Eliminar</button>
-      <button (click)="verEstadoPedido(pedido.id)">Ver Estado Pedido</button>
-      <button (click)="repeatLastPedido(pedido.usuarioId)">Repetir Pedido</button>
-    </li>
-  </ul>
-
-  <div *ngIf="selectedPedido">
-    <h2>Detalles del Pedido</h2>
-    <p>ID: {{ selectedPedido.id }}</p>
-    <p>Usuario ID: {{ selectedPedido.usuarioId }}</p>
-    <p>Fecha: {{ selectedPedido.fechaPedido }}</p>
-    <p>Monto Total: {{ selectedPedido.montoTotal }}</p>
-    <p>Estado: {{ selectedPedido.estado }}</p>
-    <p>Dirección de Envío: {{ selectedPedido.direccionEnvio }}</p>
-  </div>
-
-  <div *ngIf="pedidoEstado">
-    <h2>Estado del Pedido</h2>
-    <p>{{ pedidoEstado }}</p>
+<div class="container pedidos-list-container">
+  <h1 class="text-center my-4">Lista de Pedidos</h1>
+  <div *ngIf="pedidos.length === 0" class="alert alert-info text-center">No hay pedidos disponibles.</div>
+  <div class="list-group">
+    <div *ngFor="let pedido of pedidos" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+      <div>
+        <h5 class="mb-1">Pedido #{{ pedido.id }}</h5>
+        <p class="mb-1">Fecha: {{ pedido.fechaPedido }}</p>
+        <p class="mb-1">Monto Total: S/. {{ pedido.montoTotal }}</p>
+      </div>
+      <div>
+        <button mat-raised-button color="primary" (click)="viewPedido(pedido.id)">Ver</button>
+        <button mat-raised-button color="warn" (click)="deletePedido(pedido.id)">Eliminar</button>
+        <button mat-raised-button color="accent" (click)="verEstadoPedido(pedido.id)">Ver Estado</button>
+        <button mat-raised-button color="primary" (click)="repeatLastPedido(pedido.usuarioId)">Repetir</button>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,11 +1,23 @@
 <div class="container mt-4">
   <h2 class="text-center mb-4">Lista de Productos</h2>
   <div class="row">
-    <div *ngFor="let product of products" class="col-md-4 mb-4">
-      <div class="card h-100">
+    <div *ngFor="let product of products" class="col-12 col-md-4 mb-4">
+      <div class="card h-100 product-card">        
         <div class="card-body">
-          <h5 class="card-title">{{ product.nombre }}</h5>
-          <p class="card-text">S/. {{ product.precio }}</p>
+          <ul class="list-unstyled d-flex justify-content-between">
+            <li>
+              <i class="text-warning fa fa-star"></i>
+              <i class="text-warning fa fa-star"></i>
+              <i class="text-warning fa fa-star"></i>
+              <i class="text-muted fa fa-star"></i>
+              <i class="text-muted fa fa-star"></i>
+            </li>
+            <li class="text-muted text-right">S/. {{ product.precio }}</li>
+          </ul>
+          <a href="#" class="h2 text-decoration-none text-dark">{{ product.nombre }}</a>
+          <p class="card-text">
+            {{ product.descripcion }}
+          </p>
           <button class="btn btn-primary" (click)="addToCart(product.id)">Agregar al Carrito</button>
         </div>
       </div>

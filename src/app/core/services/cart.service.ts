@@ -13,6 +13,7 @@ import { ProductService } from './product.service';
 export class CartService {
   private baseUrl = environment.carrito_url;
   private cartId: number | null = null;
+  private cartData: any = null; // Variable para almacenar los datos del carrito
 
   constructor(private http: HttpClient, private userUtilsService: UserUtilsService, private productService: ProductService) {
   }
@@ -68,6 +69,9 @@ export class CartService {
 
   // Obtener detalles completos del carrito incluyendo los productos
   getCartWithProducts(cartId: number): Observable<any> {
+    if (this.cartData) {
+      return of(this.cartData); // Devolver los datos almacenados si existen
+    }
     return this.getCart(cartId).pipe(
       switchMap(cart => this.getCartProducts(cartId).pipe(
         switchMap(cartProducts => {
@@ -83,7 +87,8 @@ export class CartService {
             map(products => ({
               ...cart,
               productos: products
-            }))
+            })),
+            tap(cart => this.cartData = cart) // Almacenar los datos del carrito
           );
         })
       ))
@@ -115,23 +120,33 @@ export class CartService {
   }
 
   updateProductQuantity(cartDetailId: number, quantity: number): Observable<any> {
-    return this.http.put(`${this.baseUrl}/producto/${cartDetailId}?cantidad=${quantity}`, {});
+    return this.http.put(`${this.baseUrl}/producto/${cartDetailId}?cantidad=${quantity}`, {}).pipe(
+      tap(() => this.cartData = null) // Limpiar los datos almacenados
+    );
   }
 
   removeProductFromCart(carritoId: number, productoId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${carritoId}/producto/${productoId}`);
+    return this.http.delete<void>(`${this.baseUrl}/${carritoId}/producto/${productoId}`).pipe(
+      tap(() => this.cartData = null) // Limpiar los datos almacenados
+    );
   }
 
   clearCart(cartId: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${cartId}/vaciar`);
+    return this.http.delete(`${this.baseUrl}/${cartId}/vaciar`).pipe(
+      tap(() => this.cartData = null) // Limpiar los datos almacenados
+    );
   }
 
   deleteCart(cartId: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${cartId}`);
+    return this.http.delete(`${this.baseUrl}/${cartId}`).pipe(
+      tap(() => this.cartData = null) // Limpiar los datos almacenados
+    );
   }
 
   saveCart(cartId: number): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${cartId}/guardar`, {});
+    return this.http.put(`${this.baseUrl}/${cartId}/guardar`, {}).pipe(
+      tap(() => this.cartData = null) // Limpiar los datos almacenados
+    );
   }
 
   private getUserIdFromToken(): Observable<number | null> {
@@ -162,5 +177,15 @@ export class CartService {
       }
     }
     return [];
+  }
+
+  createNewCart(usuarioId: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}`, { usuarioId }).pipe(
+      tap((newCart: any) => {
+        this.cartId = newCart.id;
+        this.cartData = newCart;
+        localStorage.setItem('cartId', newCart.id.toString());
+      })
+    );
   }
 }
