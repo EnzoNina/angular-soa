@@ -1,11 +1,23 @@
-<div class="pedidos-proceso-list-container">
-    <h1>Pedidos en Proceso</h1>
-    <div *ngIf="pedidos.length === 0">No hay pedidos pendientes.</div>
-    <ul>
-        <li *ngFor="let pedido of pedidos">
-            <span>{{ pedido.id }} - {{ pedido.fechaPedido }} - {{ pedido.montoTotal }}</span>
-            <button (click)="confirmarPedido(pedido.id)">Confirmar Pedido</button>
-            <button (click)="cancelarPedido(pedido.id)">Cancelar Pedido</button>
-        </li>
-    </ul>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Pedidos en Proceso</h1>
+  <div *ngIf="loading" class="loading-overlay">
+    <app-loading></app-loading>
+  </div>
+  <div *ngIf="!loading">
+    <div *ngIf="pedidos.length === 0" class="alert alert-info text-center">No hay pedidos pendientes.</div>
+    <mat-card *ngFor="let pedido of pedidos" class="mb-3">
+      <mat-card-content>
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h5>{{ pedido.id }} - {{ pedido.fechaPedido }}</h5>
+            <p>Monto Total: S/. {{ pedido.montoTotal }}</p>
+          </div>
+          <div>
+            <button mat-raised-button color="primary" (click)="confirmarPedido(pedido.id)">Confirmar Pedido</button>
+            <button mat-raised-button color="warn" (click)="cancelarPedido(pedido.id)">Cancelar Pedido</button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

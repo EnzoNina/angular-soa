@@ -8,6 +8,7 @@ import { environment } from '../../environments/environment';
 })
 export class PedidoService {
     private baseUrl = `${environment.pedido_url}`;
+    // private baseUrl = `${environment.gateway}`+'api/pedidos';
 
     constructor(private http: HttpClient) { }
 

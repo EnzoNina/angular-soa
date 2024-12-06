@@ -1,6 +1,15 @@
 .checkout-container {
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #f0f8ff; /* Light blue background */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Comic Sans MS', cursive, sans-serif; /* Fun font */
+}
+
+h1 {
+  color: #2e8b57; /* Sea green color */
+  text-align: center;
+  font-size: 2.5em;
 }
 
 .cart-summary {
@@ -8,4 +17,67 @@
   padding: 10px;
   background-color: #fff;
   border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.coupon-section input {
+  padding: 10px;
+  border: 2px solid #2e8b57;
+  border-radius: 5px;
+  width: calc(100% - 22px);
+}
+
+.coupon-section button {
+  padding: 10px 20px;
+  background-color: #2e8b57;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.coupon-section button:hover {
+  background-color: #3cb371; /* Medium sea green */
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #ff6347; /* Tomato color */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #ff4500; /* Orange red */
+}
+
+.address-section {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.address-section h2 {
+  color: #2e8b57;
+}
+
+p {
+  font-size: 1.2em;
+}
+
+.checkout-container::before {
+  content: url('https://example.com/animal-background.jpg'); /* Add a URL to an animal-themed background image */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  z-index: -1;
 }

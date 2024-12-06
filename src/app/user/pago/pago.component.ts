@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { PagosService } from '../../core/services/pago.service';
 import { FormsModule, NgForm } from '@angular/forms';
 
@@ -8,8 +9,18 @@ import { FormsModule, NgForm } from '@angular/forms';
   styleUrls: ['./pago.component.css'],
   imports: [FormsModule]
 })
-export class PagoComponent {
-  constructor(private pagosService: PagosService) { }
+export class PagoComponent implements OnInit {
+  pedidoId: any;
+  montoTotal: any;
+
+  constructor(private pagosService: PagosService, private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.pedidoId = +params['pedidoId'];
+      this.montoTotal = +params['montoTotal'];
+    });
+  }
 
   iniciarPago(pago: any) {
     this.pagosService.iniciarProcesoPago(pago).subscribe(response => {

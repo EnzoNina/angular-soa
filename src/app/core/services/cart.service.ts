@@ -12,6 +12,7 @@ import { ProductService } from './product.service';
 })
 export class CartService {
   private baseUrl = environment.carrito_url;
+  // private baseUrl = `${environment.gateway}`+'api/carrito';
   private cartId: number | null = null;
   private cartData: any = null; // Variable para almacenar los datos del carrito
 

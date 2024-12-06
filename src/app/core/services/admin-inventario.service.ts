@@ -8,6 +8,7 @@ import { environment } from '../../environments/environment';
 })
 export class AdminInventarioService {
   private baseUrl = `${environment.inventario_url}`;
+  // private baseUrl = `${environment.gateway}`+'api/reservas';
 
   constructor(private http: HttpClient) { }
 

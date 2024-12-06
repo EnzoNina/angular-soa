@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 export class ProductService {
 
   private baseUrl = environment.products_url;
+  // private baseUrl = `${environment.gateway}`+'api/producto';
 
   constructor(private http: HttpClient) { }
 

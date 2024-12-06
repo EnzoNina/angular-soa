@@ -70,7 +70,7 @@ export class CheckoutComponent implements OnInit {
     };
     this.pedidoService.createPedido(pedidoRequest).subscribe(response => {
       console.log('Pedido creado con éxito', response);
-      this.router.navigate(['/pago']);
+      this.router.navigate(['user/pago'], { queryParams: { pedidoId: response.id, montoTotal: response.montoTotal } });
     });
   }
 }

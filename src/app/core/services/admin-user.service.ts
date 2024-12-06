@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 })
 export class AdminUserService {
   private baseUrl = environment.users_url;
+  // private baseUrl = `${environment.gateway}` + 'api/usuario';
 
   constructor(private http: HttpClient) { }
 

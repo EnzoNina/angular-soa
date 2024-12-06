@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 
 export class AdminCategoryService {
   private baseUrl = environment.categories_url;
+  // private baseUrl = `${environment.gateway}`+'api/categoria';
 
   constructor(private http: HttpClient) {}
 

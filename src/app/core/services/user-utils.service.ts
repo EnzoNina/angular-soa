@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 })
 export class UserUtilsService {
     private userUrl = environment.users_url;
+    // private userUrl = `${environment.gateway}` + 'api/usuario';
 
     constructor(private http: HttpClient) { }
 

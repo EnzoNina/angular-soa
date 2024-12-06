@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PedidoService } from '../../core/services/pedido.service';
-import { NgFor, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -9,17 +9,19 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-pedidos-list',
   templateUrl: './pedidos-list.component.html',
   styleUrls: ['./pedidos-list.component.css'],
-  imports: [NgIf, NgFor, MatButtonModule, MatCardModule, MatIconModule, MatToolbarModule, MatInputModule, MatFormFieldModule, MatDialogModule]
+  imports: [NgIf, MatButtonModule, MatCardModule, MatIconModule, MatToolbarModule, MatInputModule, MatFormFieldModule, MatDialogModule, MatTableModule]
 })
 export class PedidosListComponent implements OnInit {
   pedidos: any[] = [];
   selectedPedido: any = null;
   pedidoEstado: string | null = null;
+  displayedColumns: string[] = ['id', 'fechaPedido', 'montoTotal', 'acciones'];
 
   constructor(private pedidoService: PedidoService) { }
 
