@@ -9,14 +9,14 @@ import { environment } from '../../environments/environment';
 })
 
 export class AdminCategoryService {
-  private baseUrl = environment.gateway;
-  // private baseUrl = `${environment.gateway}`+'api/categoria';
+  // private baseUrl = environment.gateway;
+  private baseUrl = `${environment.gateway}`+'api/categoria';
 
   constructor(private http: HttpClient) {}
 
   // Listar todas las categorías
   getAllCategorias(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/api/categoria`).pipe(
+    return this.http.get(`${this.baseUrl}`).pipe(
       tap(response => console.log('Categorías obtenidas:', response))
     );
   }

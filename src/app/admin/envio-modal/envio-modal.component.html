@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <h5 class="modal-title">Crear Envío</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="onNoClick()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="envioForm">
+    <div class="mb-3">
+      <label for="pedidoId" class="form-label">Pedido ID</label>
+      <input type="text" id="pedidoId" class="form-control" formControlName="pedidoId" readonly>
+    </div>
+    <div class="mb-3">
+      <label for="usuarioId" class="form-label">Usuario ID</label>
+      <input type="text" id="usuarioId" class="form-control" formControlName="usuarioId" readonly>
+    </div>
+    <div class="mb-3">
+      <label for="direccionDestino" class="form-label">Dirección Destino</label>
+      <input type="text" id="direccionDestino" class="form-control" formControlName="direccionDestino" readonly>
+    </div>
+    <div class="mb-3">
+      <label for="transportista" class="form-label">Transportista</label>
+      <input type="text" id="transportista" class="form-control" formControlName="transportista">
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="onNoClick()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="onSubmit()" [disabled]="envioForm.invalid">Crear</button>
+</div>

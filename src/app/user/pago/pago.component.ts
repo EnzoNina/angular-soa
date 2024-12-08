@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PagosService } from '../../core/services/pago.service';
 import { FormsModule, NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pago',
@@ -12,8 +13,9 @@ import { FormsModule, NgForm } from '@angular/forms';
 export class PagoComponent implements OnInit {
   pedidoId: any;
   montoTotal: any;
+  pagoId: any;
 
-  constructor(private pagosService: PagosService, private route: ActivatedRoute) { }
+  constructor(private pagosService: PagosService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -24,7 +26,8 @@ export class PagoComponent implements OnInit {
 
   iniciarPago(pago: any) {
     this.pagosService.iniciarProcesoPago(pago).subscribe(response => {
-      console.log('Proceso de pago iniciado:', response);
+      Swal.fire('Proceso de pago iniciado', `ID: ${response.id}`, 'success');
+      this.pagoId = response.id; // Almacenar el id del pago
       this.validarMetodoPago(response.metodoPagoId);
     });
   }
@@ -32,22 +35,23 @@ export class PagoComponent implements OnInit {
   validarMetodoPago(metodoPagoId: number) {
     this.pagosService.validarMetodoPago(metodoPagoId).subscribe(isValid => {
       if (isValid) {
-        this.confirmarPago(metodoPagoId);
+        this.confirmarPago(this.pagoId); // Usar el id del pago
       } else {
-        this.cancelarPago(metodoPagoId);
+        this.cancelarPago(this.pagoId); // Usar el id del pago
       }
     });
   }
 
   confirmarPago(pagoId: number) {
     this.pagosService.confirmarPago(pagoId).subscribe(response => {
-      console.log('Pago confirmado:', response);
+      Swal.fire('Pago confirmado', `ID: ${pagoId}`, 'success');
+      this.router.navigate(['/user/index']); // Redirigir al índice
     });
   }
 
   cancelarPago(pagoId: number) {
     this.pagosService.cancelarPago(pagoId).subscribe(() => {
-      console.log('Pago cancelado');
+      Swal.fire('Pago cancelado', `ID: ${pagoId}`, 'error');
     });
   }
 }

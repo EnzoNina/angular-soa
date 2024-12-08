@@ -1,0 +1,41 @@
+.full-width {
+  width: 100%;
+}
+
+.modal-header {
+  border-bottom: none;
+  padding-bottom: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.modal-body {
+  padding-top: 0;
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  width: 100%;
+  max-width: 400px;
+}
+
+.mat-form-field {
+  margin-bottom: 1rem;
+}
+
+.modal-footer {
+  border-top: none;
+  padding-top: 0;
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  margin-left: 0.5rem;
+}

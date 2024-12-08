@@ -11,7 +11,8 @@ import { CartService } from './cart.service';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = environment.auth_url;  
+  private baseUrl = `${environment.auth_url}`;
+  // private baseUrl = environment.gateway + '/auth';
   private jwtHelper = new JwtHelperService();
   private rolesSubject = new BehaviorSubject<string[]>([]);
   roles$ = this.rolesSubject.asObservable();
@@ -26,9 +27,11 @@ export class AuthService {
         // Limpiar el localStorage antes de establecer los nuevos valores
         localStorage.clear();
         const roles = response.usuario.roles ? [response.usuario.roles] : [];
+        const id_usuario = response.usuario.id ? [response.usuario.id] : [];
         this.rolesSubject.next(roles);
         localStorage.setItem('jwt', response.token);
         localStorage.setItem('roles', JSON.stringify(roles));
+        localStorage.setItem('userId',JSON.stringify(id_usuario));
       }),
       switchMap(() => this.cartService.createCartIfNotExists())
     );

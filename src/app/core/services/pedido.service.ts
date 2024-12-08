@@ -7,8 +7,8 @@ import { environment } from '../../environments/environment';
     providedIn: 'root'
 })
 export class PedidoService {
-    private baseUrl = environment.gateway + '/api/pedidos';
-    // private baseUrl = `${environment.gateway}`+'api/pedidos';
+    // private baseUrl = environment.gateway + '/api/pedidos';
+    private baseUrl = `${environment.gateway}` + 'api/pedidos';
 
     constructor(private http: HttpClient) { }
 

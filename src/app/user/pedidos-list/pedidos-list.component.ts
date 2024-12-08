@@ -30,7 +30,8 @@ export class PedidosListComponent implements OnInit {
   }
 
   loadPedidos(): void {
-    this.pedidoService.getAllPedidos().subscribe(pedidos => {
+    const userId = +localStorage.getItem('userId')!;
+    this.pedidoService.getPedidosByUsuarioId(userId).subscribe(pedidos => {
       this.pedidos = pedidos;
     });
   }

@@ -7,8 +7,8 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class PagosService {
-  private baseUrl = `${environment.pagos_url}`;
-  // private baseUrl = `${environment.gateway}`+'api/pagos';
+  // private baseUrl = `${environment.pagos_url}`;
+  private baseUrl = `${environment.gateway}` + 'api/pagos';
 
   constructor(private http: HttpClient) { }
 
@@ -35,4 +35,9 @@ export class PagosService {
   buscarHistorialPagosPorUsuario(usuarioId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/usuario/${usuarioId}`);
   }
+
+  listarPagosPagados(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/pagados`);
+  }
+
 }

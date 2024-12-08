@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -9,8 +9,8 @@ import { environment } from '../../environments/environment';
 })
 export class ProductService {
 
-  private baseUrl = environment.gateway+'/api/producto';
-  // private baseUrl = `${environment.gateway}`+'api/producto';
+  // private baseUrl = environment.gateway+'/api/producto';
+  private baseUrl = `${environment.gateway}` + 'api/producto';
 
   constructor(private http: HttpClient) { }
 

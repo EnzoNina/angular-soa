@@ -6,9 +6,8 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminInventarioService {
-  private baseUrl = environment.gateway + '/api/reservas';
-  // private baseUrl = `${environment.gateway}`+'api/reservas';
+export class AdminInventarioService {  
+  private baseUrl = `${environment.gateway}`+'api/reservas';
 
   constructor(private http: HttpClient) { }
 

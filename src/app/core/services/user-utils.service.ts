@@ -8,8 +8,8 @@ import { environment } from '../../environments/environment';
     providedIn: 'root'
 })
 export class UserUtilsService {
-    private userUrl = environment.users_url;
-    // private userUrl = `${environment.gateway}` + 'api/usuario';
+    // private userUrl = environment.users_url;
+    private userUrl = `${environment.gateway}` + 'api/usuario';
 
     constructor(private http: HttpClient) { }
 

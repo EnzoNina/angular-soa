@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
-    gateway: "https://gateway-dot-microservicios-soa.uc.r.appspot.com",
+    gateway: "https://gateway-dot-microservicios-soa.uc.r.appspot.com/",
     auth_url: "https://auth-dot-microservicios-soa.uc.r.appspot.com/api/auth",
     users_url: "https://usuario-dot-microservicios-soa.uc.r.appspot.com/api/usuario",
     products_url: "https://producto-dot-microservicios-soa.uc.r.appspot.com/api/producto",

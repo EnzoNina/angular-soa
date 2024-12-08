@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { LoadingComponent } from '../../utils/loading/loading.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pedidos-proceso-list',
@@ -40,6 +41,7 @@ export class PedidosProcesoListComponent implements OnInit {
     this.pedidoService.updatePedidoEstado(id, 'RECIBIDO').subscribe(() => {
       this.loadPedidosPendientes();
       this.loading = false;
+      Swal.fire('Pedido confirmado', `El pedido con ID: ${id} ha sido confirmado.`, 'success');
     });
   }
 
@@ -48,6 +50,7 @@ export class PedidosProcesoListComponent implements OnInit {
     this.pedidoService.cancelPedido(id).subscribe(() => {
       this.loadPedidosPendientes();
       this.loading = false;
+      Swal.fire('Pedido cancelado', `El pedido con ID: ${id} ha sido cancelado.`, 'error');
     });
   }
 }

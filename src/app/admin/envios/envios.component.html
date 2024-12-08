@@ -1,0 +1,29 @@
+<div class="container">
+    <h2 class="mt-5">Pedidos Pagados</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Pedido ID</th>
+                <th>Usuario ID</th>
+                <th>Dirección Envío</th>
+                <th>Monto</th>
+                <th>Fecha Pago</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let pago of pagosPagados">
+                <td>{{ pago.id }}</td>
+                <td>{{ pago.pedidoId }}</td>
+                <td>{{ pago.usuarioId }}</td>
+                <td>{{ pago.direccionEnvio }}</td>
+                <td>{{ pago.monto }}</td>
+                <td>{{ pago.fechaPago }}</td>
+                <td>
+                    <button class="btn btn-primary" (click)="openEnvioModal(pago)">Crear Envío</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

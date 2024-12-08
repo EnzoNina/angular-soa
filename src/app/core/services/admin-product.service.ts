@@ -8,8 +8,8 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class AdminProductService {
-  private baseUrl = environment.gateway + '/api/producto';
-  // private baseUrl = `${environment.gateway}`+'api/producto';
+  // private baseUrl = environment.gateway + '/api/producto';
+  private baseUrl = `${environment.gateway}` + 'api/producto';
 
   constructor(private http: HttpClient) { }
 
