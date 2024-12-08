@@ -1,0 +1,23 @@
+.jumbotron {
+  padding: 4rem 2rem;
+}
+
+.jumbotron .btn {
+  margin-top: 1rem;
+}
+
+.features-section {
+  padding: 2rem 0;
+}
+
+.features-section .col-md-4 {
+  margin-bottom: 2rem;
+}
+
+.mission-section {
+  padding: 2rem 0;
+}
+
+.call-to-action-section {
+  padding: 2rem 0;
+}

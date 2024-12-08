@@ -6,6 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { provideHttpClient } from '@angular/common/http';
 import { AuthService } from '../core/services/auth.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { AuthService } from '../core/services/auth.service';
     AuthRoutingModule,
     LoginComponent,
     RegisterComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
   ],
   providers: [provideHttpClient(), AuthService]
 })

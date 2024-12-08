@@ -1,17 +1,24 @@
-<h1 mat-dialog-title>{{ data.category.id ? 'Editar Categoría' : 'Crear Categoría' }}</h1>
-<div mat-dialog-content>
-  <form>
-    <div class="mb-3">
-      <label for="categoryNombre" class="form-label">Nombre</label>
-      <input type="text" class="form-control" id="categoryNombre" [(ngModel)]="data.category.nombre" name="nombre">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ data.category.id ? 'Editar Categoría' : 'Crear Categoría' }}</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="onNoClick()"></button>
     </div>
-    <div class="mb-3">
-      <label for="categoryDescripcion" class="form-label">Descripción</label>
-      <input type="text" class="form-control" id="categoryDescripcion" [(ngModel)]="data.category.descripcion" name="descripcion">
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <label for="categoryNombre" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="categoryNombre" [(ngModel)]="data.category.nombre" name="nombre" required>
+        </div>
+        <div class="mb-3">
+          <label for="categoryDescripcion" class="form-label">Descripción</label>
+          <input type="text" class="form-control" id="categoryDescripcion" [(ngModel)]="data.category.descripcion" name="descripcion" required>
+        </div>
+      </form>
     </div>
-  </form>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button [mat-dialog-close]="true">Guardar</button>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="onNoClick()">Cancelar</button>
+      <button type="button" class="btn btn-primary" [mat-dialog-close]="true">Guardar</button>
+    </div>
+  </div>
 </div>

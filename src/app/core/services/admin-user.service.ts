@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class AdminUserService {
-  private baseUrl = environment.users_url;
+  private baseUrl = environment.gateway+'/api/usuario';
   // private baseUrl = `${environment.gateway}` + 'api/usuario';
 
   constructor(private http: HttpClient) { }

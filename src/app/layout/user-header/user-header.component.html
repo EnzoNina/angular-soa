@@ -1,50 +1,39 @@
 <!-- User Header -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-    <div class="container d-flex justify-content-between align-items-center">
-
-        <a class="navbar-brand text-success logo h1 align-self-center" href="#">
-            CodeKion
+  <div class="container d-flex justify-content-between align-items-center">
+    <a class="navbar-brand text-success logo h1 align-self-center" href="#">
+      CodeKion
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#userNavbar" aria-controls="userNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse flex-fill d-lg-flex justify-content-lg-between" id="userNavbar">
+      <ul class="navbar-nav d-flex justify-content-between mx-lg-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="user/products">Tienda</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="user/pedidos">Mis Pedidos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="user/pedidos-proceso">Mis Pedidos en proceso</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contactanos</a>
+        </li>
+      </ul>
+      <div class="navbar align-self-center d-flex">
+        <a class="nav-icon position-relative text-decoration-none me-3" (click)="openCartModal()">
+          <i class="fa fa-fw fa-cart-arrow-down text-dark"></i>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-white">{{ cartItemCount }}</span>
         </a>
-
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-            data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <button class="btn btn-outline-danger" (click)="logout()">
+          Cerrar Sesión
         </button>
-
-        <div class="align-self-center collapse navbar-collapse flex-fill d-lg-flex justify-content-lg-between"
-            id="templatemo_main_nav">
-            <div class="flex-fill">
-                <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="user/products">Tienda</a>
-                    </li>                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="user/pedidos">Mis Pedidos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="user/pedidos-proceso">Mis Pedidos en proceso</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contactanos</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="navbar align-self-center d-flex">
-                <a class="nav-icon position-relative text-decoration-none me-3" (click)="openCartModal()">
-                    <i class="fa fa-fw fa-cart-arrow-down text-dark"></i>
-                    <span
-                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-white">{{ cartItemCount }}</span>
-                </a>
-                <button class="btn btn-outline-danger" (click)="logout()">
-                    Cerrar Sesión
-                </button>
-            </div>
-        </div>
-
+      </div>
     </div>
+  </div>
 </nav>
-<!-- Close User Header -->
