@@ -8,7 +8,6 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class AdminProductService {
-  // private baseUrl = environment.gateway + '/api/producto';
   private baseUrl = `${environment.gateway}` + 'api/producto';
 
   constructor(private http: HttpClient) { }
@@ -16,6 +15,13 @@ export class AdminProductService {
   // Listar todos los productos
   getAllProducts(): Observable<any> {
     return this.http.get(`${this.baseUrl}`).pipe(
+      tap(response => console.log('Productos obtenidos:', response))
+    );
+  }
+
+  // Listar todos los productos no agotados
+  getAllProductsNoAgotado(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/not-agotado`).pipe(
       tap(response => console.log('Productos obtenidos:', response))
     );
   }
@@ -59,6 +65,27 @@ export class AdminProductService {
   getLowStockProducts(limite: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/bajo-stock`, { params: { limite: limite.toString() } }).pipe(
       tap(response => console.log('Productos con bajo stock obtenidos:', response))
+    );
+  }
+
+  // Obtener productos destacados
+  getDestacados(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/destacados`).pipe(
+      tap(response => console.log('Productos destacados obtenidos:', response))
+    );
+  }
+
+  // Marcar un producto como destacado
+  marcarComoDestacado(productId: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${productId}/destacar`, null).pipe(
+      tap(() => console.log('Producto marcado como destacado'))
+    );
+  }
+
+  // Desmarcar un producto como destacado
+  desmarcarComoDestacado(productId: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${productId}/desmarcar`, null).pipe(
+      tap(() => console.log('Producto desmarcado como destacado'))
     );
   }
 }

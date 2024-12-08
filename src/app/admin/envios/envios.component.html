@@ -26,4 +26,38 @@
             </tr>
         </tbody>
     </table>
+
+    <h2 class="mt-5">Lista de Envíos por Usuario</h2>
+    <div class="mb-3">
+        <input type="text" class="form-control" placeholder="ID del Usuario" [(ngModel)]="userId">
+        <button class="btn btn-primary mt-2" (click)="verEnvios()">Ver Envíos</button>
+    </div>
+    <table class="table" *ngIf="envios.length > 0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Pedido ID</th>
+                <th>Usuario ID</th>
+                <th>Dirección Destino</th>
+                <th>Transportista</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let envio of envios">
+                <td>{{ envio.id }}</td>
+                <td>{{ envio.pedidoId }}</td>
+                <td>{{ envio.usuarioId }}</td>
+                <td>{{ envio.direccionDestino }}</td>
+                <td>{{ envio.transportista }}</td>
+                <td>{{ envio.estado }}</td>
+                <td>
+                    <button class="btn btn-warning" (click)="actualizarEstadoEnvio(envio.id, 'Pedido en camino')">Envío en Camino</button>
+                    <button class="btn btn-success" (click)="actualizarEstadoEnvio(envio.id, 'El pedido llego al destino')">Llegó a Destino</button>
+                    <button class="btn btn-danger" (click)="cancelarEnvio(envio.id)">Cancelar Envío</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

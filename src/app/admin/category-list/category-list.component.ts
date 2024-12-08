@@ -28,14 +28,18 @@ export class CategoryListComponent implements OnInit {
 
   getAllCategories(): void {
     this.adminCategoryService.getAllCategorias().subscribe(categories => {
-      this.categories = categories;
+      this.categories = categories.filter((category: { activo: any; }) => category.activo);
     });
   }
 
   searchCategoryById(): void {
     if (this.searchCategoryId) {
       this.adminCategoryService.getCategoriaById(Number(this.searchCategoryId)).subscribe(category => {
-        this.categories = [category];
+        if (category.activo) {
+          this.categories = [category];
+        } else {
+          this.categories = [];
+        }
       });
     } else {
       this.getAllCategories();

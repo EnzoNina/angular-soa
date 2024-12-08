@@ -2,6 +2,10 @@
   <h2>Product List</h2>
   <button class="btn btn-primary mb-3" (click)="openCreateModal()">Crear Producto</button>
   <button class="btn btn-secondary mb-3" (click)="listarReservas()">Listar Reservas</button>
+  <div class="mb-3">
+    <input type="number" class="form-control" placeholder="Buscar Producto por ID" [(ngModel)]="searchProductId">
+    <button class="btn btn-primary mt-2" (click)="buscarProductoPorId()">Buscar Producto</button>
+  </div>
   <table class="table">
     <thead>
       <tr>
@@ -28,6 +32,35 @@
           <button class="btn btn-danger" (click)="deleteProduct(product.id)">Eliminar</button>
           <button class="btn btn-secondary" (click)="markProductAsOutOfStock(product.id)">Marcar como Agotado</button>
           <button class="btn btn-info" (click)="consultarExistencias(product.id)">Consultar Existencias</button>
+          <button class="btn btn-success" (click)="marcarComoDestacado(product.id)">Marcar como Destacado</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Productos Destacados</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th>Categoria</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of destacados">
+        <td>{{ product.id }}</td>
+        <td>{{ product.nombre }}</td>
+        <td>{{ product.descripcion }}</td>
+        <td>{{ product.precio }}</td>
+        <td>{{ product.stock }}</td>
+        <td>{{ product.categoriaNombre }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="desmarcarComoDestacado(product.id)">Desmarcar como Destacado</button>
         </td>
       </tr>
     </tbody>

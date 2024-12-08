@@ -8,7 +8,6 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class AdminUserService {
-  // private baseUrl = environment.gateway+'/api/usuario';
   private baseUrl = `${environment.gateway}` + 'api/usuario';
 
   constructor(private http: HttpClient) { }
@@ -57,4 +56,25 @@ export class AdminUserService {
       tap(response => console.log('Usuario obtenido:', response))
     );
   }
+
+  // Obtener acciones de todos los usuarios
+  getAllUserActions(): Observable<UserAction[]> {
+    return this.http.get<UserAction[]>(`${this.baseUrl}/acciones`).pipe(
+      tap(response => console.log('Acciones de todos los usuarios obtenidas:', response))
+    );
+  }
+
+  // Obtener acciones de un usuario por ID
+  getUserActions(userId: number): Observable<UserAction[]> {
+    return this.http.get<UserAction[]>(`${this.baseUrl}/${userId}/acciones`).pipe(
+      tap(response => console.log(`Acciones del usuario ${userId} obtenidas:`, response))
+    );
+  }
+}
+
+export interface UserAction {
+  id: number;
+  user: { id: number, nombres: string, apellidop: string, apellidom: string };
+  actionType: string;
+  actionTimestamp: string;
 }

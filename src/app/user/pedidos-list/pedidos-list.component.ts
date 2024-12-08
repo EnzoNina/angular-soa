@@ -30,7 +30,7 @@ export class PedidosListComponent implements OnInit {
   }
 
   loadPedidos(): void {
-    const userId = +localStorage.getItem('userId')!;
+    const userId = +localStorage.getItem('userId')!.replace(/[\[\]]/g, '');
     this.pedidoService.getPedidosByUsuarioId(userId).subscribe(pedidos => {
       this.pedidos = pedidos;
     });

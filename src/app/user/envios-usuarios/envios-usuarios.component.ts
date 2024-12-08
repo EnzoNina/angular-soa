@@ -32,10 +32,4 @@ export class EnviosUsuarioComponent implements OnInit {
     });
   }
 
-  actualizarEstadoEnvio(envioId: number, nuevoEstado: string): void {
-    this.envioService.actualizarEstadoEnvio(envioId, nuevoEstado).subscribe(() => {
-      Swal.fire('Actualizado', 'El estado del envío ha sido actualizado', 'success');
-      this.historialEnviosPorUsuario();
-    });
-  }
 }

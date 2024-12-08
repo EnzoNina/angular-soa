@@ -18,9 +18,11 @@ import { LowStockModalComponent } from '../low-stock-modal/low-stock-modal.compo
 })
 export class ProductListComponent implements OnInit {
   products: any[] = [];
+  destacados: any[] = [];
   categories: any[] = [];
   selectedProduct: any = {};
   newStock: number = 0;
+  searchProductId: number | null = null; // Nueva propiedad para almacenar el ID del producto a buscar
 
   constructor(
     private adminProductService: AdminProductService,
@@ -32,6 +34,7 @@ export class ProductListComponent implements OnInit {
   ngOnInit(): void {
     this.getAllProducts();
     this.getAllCategories();
+    this.getDestacados();
     this.checkLowStockProducts();
   }
 
@@ -42,8 +45,14 @@ export class ProductListComponent implements OnInit {
   }
 
   getAllProducts(): void {
-    this.adminProductService.getAllProducts().subscribe(products => {
+    this.adminProductService.getAllProductsNoAgotado().subscribe(products => {
       this.products = products;
+    });
+  }
+
+  getDestacados(): void {
+    this.adminProductService.getDestacados().subscribe(destacados => {
+      this.destacados = destacados;
     });
   }
 
@@ -178,5 +187,33 @@ export class ProductListComponent implements OnInit {
         confirmButtonText: 'Cerrar'
       });
     });
+  }
+
+  marcarComoDestacado(productId: number): void {
+    this.adminProductService.marcarComoDestacado(productId).subscribe(() => {
+      Swal.fire('Destacado', 'El producto ha sido marcado como destacado.', 'success');
+      this.getAllProducts();
+      this.getDestacados();
+    });
+  }
+
+  desmarcarComoDestacado(productId: number): void {
+    this.adminProductService.desmarcarComoDestacado(productId).subscribe(() => {
+      Swal.fire('Desmarcado', 'El producto ha sido desmarcado como destacado.', 'success');
+      this.getDestacados();
+    });
+  }
+
+  buscarProductoPorId(): void {
+    if (this.searchProductId !== null) {
+      this.adminProductService.getProductById(this.searchProductId).subscribe(product => {
+        Swal.fire({
+          title: 'Producto Encontrado',
+          text: `ID: ${product.id}, Nombre: ${product.nombre}, Descripción: ${product.descripcion}, Precio: ${product.precio}, Stock: ${product.stock}, Categoría: ${product.categoriaNombre}`,
+          icon: 'info',
+          confirmButtonText: 'Cerrar'
+        });
+      });
+    }
   }
 }
