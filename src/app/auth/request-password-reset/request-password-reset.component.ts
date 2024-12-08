@@ -19,12 +19,13 @@ export class RequestPasswordResetComponent {
   requestPasswordReset() {
     this.authService.sendVerificationEmail(this.email).pipe(
       tap(() => {
-        this.router.navigate(['/auth/verify-password-reset'], { queryParams: { email: this.email } });
+        
       }),
       catchError(error => {
         console.error('Error sending verification email', error);
         return of(null);
       })
     ).subscribe();
+    this.router.navigate(['/auth/verify-email-password'], { queryParams: { email: this.email } });
   }
 }

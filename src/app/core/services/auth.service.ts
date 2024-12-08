@@ -12,26 +12,23 @@ import { CartService } from './cart.service';
 })
 export class AuthService {
   private baseUrl = `${environment.auth_url}`;
-  // private baseUrl = environment.gateway + '/auth';
   private jwtHelper = new JwtHelperService();
   private rolesSubject = new BehaviorSubject<string[]>([]);
   roles$ = this.rolesSubject.asObservable();
 
-  constructor(private http: HttpClient, private cartService: CartService) {
-  }
+  constructor(private http: HttpClient, private cartService: CartService) {}
 
   login(email: string, password: string): Observable<{ token: string, usuario: any }> {
     const loginData = { email, password };
     return this.http.post<{ token: string, usuario: any }>(`${this.baseUrl}/login`, loginData).pipe(
       tap(response => {
-        // Limpiar el localStorage antes de establecer los nuevos valores
         localStorage.clear();
         const roles = response.usuario.roles ? [response.usuario.roles] : [];
         const id_usuario = response.usuario.id ? [response.usuario.id] : [];
         this.rolesSubject.next(roles);
         localStorage.setItem('jwt', response.token);
         localStorage.setItem('roles', JSON.stringify(roles));
-        localStorage.setItem('userId',JSON.stringify(id_usuario));
+        localStorage.setItem('userId', JSON.stringify(id_usuario));
       }),
       switchMap(() => this.cartService.createCartIfNotExists())
     );
@@ -60,16 +57,16 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/register`, registerData);
   }
 
-  sendVerificationEmail(correo: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/enviar-codigo`, { correo });
+  sendVerificationEmail(email: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/send-verification-code`, { email });
   }
 
-  verifyEmail(correo: string, codigo: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/verificar-cuenta`, { correo, codigo });
+  verifyEmail(email: string, verificationCode: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/verify-code`, { email, verificationCode });
   }
 
-  resetPassword(correo: string, codigo: string, password: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/reset-password`, { correo, codigo, password });
+  resetPassword(email: string, newPassword: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/reset-password`, { email, newPassword });
   }
 
   logout(): void {
