@@ -74,7 +74,7 @@ export class AdminUserService {
 
 export interface UserAction {
   id: number;
-  user: { id: number, nombres: string, apellidop: string, apellidom: string };
+  userId: number
   actionType: string;
   actionTimestamp: string;
 }
