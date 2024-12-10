@@ -30,10 +30,6 @@ export class UserListComponent implements OnInit {
     this.adminUserService.getAllUsers().subscribe(users => {
       this.users = users
         .filter((user: any) => user.activo) // Filtrar usuarios activos
-        .map((user: any) => {
-          const [apellidop, apellidom] = user.apellido.split(' ');
-          return { ...user, apellidop, apellidom };
-        });
     });
   }
 
@@ -41,8 +37,7 @@ export class UserListComponent implements OnInit {
     if (this.searchUserId) {
       this.adminUserService.getUserById(this.searchUserId).subscribe(user => {
         if (user.activo) { // Verificar si el usuario está activo
-          const [apellidop, apellidom] = user.apellido.split(' ');
-          this.users = [{ ...user, apellidop, apellidom }];
+          this.users = [user];
         } else {
           this.users = [];
         }
