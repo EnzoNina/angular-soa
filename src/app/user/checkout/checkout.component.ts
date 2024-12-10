@@ -66,11 +66,13 @@ export class CheckoutComponent implements OnInit {
       usuarioId: this.cart.usuarioId,
       montoTotal: this.cart.total,
       estado: 'Pendiente',
-      direccionEnvio: this.usuario.direccion
+      direccionEnvio: this.usuario.direccion,
+      carritoId: cartId
     };
     this.pedidoService.createPedido(pedidoRequest).subscribe(response => {
       console.log('Pedido creado con éxito', response);
       this.router.navigate(['user/pago'], { queryParams: { pedidoId: response.id, montoTotal: response.montoTotal } });
     });
   }
+  
 }

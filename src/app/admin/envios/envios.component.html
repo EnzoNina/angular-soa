@@ -22,6 +22,14 @@
                 <td>{{ pago.fechaPago }}</td>
                 <td>
                     <button class="btn btn-primary" (click)="openEnvioModal(pago)">Crear Envío</button>
+                    <button class="btn btn-secondary" (click)="generarYEnviarFactura(pago.id)">Generar Factura</button>
+                    <select [(ngModel)]="metodoEnvio" class="form-control mt-2">
+                        <option value="express">Express</option>
+                        <option value="standard">Standard</option>
+                    </select>
+                    <button class="btn btn-info mt-2"
+                        (click)="estimarFechaEntrega(pago.direccionEnvio, metodoEnvio)">Estimar Fecha de
+                        Entrega</button>
                 </td>
             </tr>
         </tbody>
@@ -53,8 +61,10 @@
                 <td>{{ envio.transportista }}</td>
                 <td>{{ envio.estado }}</td>
                 <td>
-                    <button class="btn btn-warning" (click)="actualizarEstadoEnvio(envio.id, 'Pedido en camino')">Envío en Camino</button>
-                    <button class="btn btn-success" (click)="actualizarEstadoEnvio(envio.id, 'El pedido llego al destino')">Llegó a Destino</button>
+                    <button class="btn btn-warning" (click)="actualizarEstadoEnvio(envio.id, 'Pedido en camino')">Envío
+                        en Camino</button>
+                    <button class="btn btn-success"
+                        (click)="actualizarEstadoEnvio(envio.id, 'El pedido llego al destino')">Llegó a Destino</button>
                     <button class="btn btn-danger" (click)="cancelarEnvio(envio.id)">Cancelar Envío</button>
                 </td>
             </tr>

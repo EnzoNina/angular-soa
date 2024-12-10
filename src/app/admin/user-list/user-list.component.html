@@ -14,17 +14,19 @@
         <th>Apellido Materno</th>
         <th>Email</th>
         <th>Dirección</th>
+        <th>Cuenta Verificada</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let user of users">
         <td>{{ user.id }}</td>
-        <td>{{ user.nombre }}</td>
+        <td>{{ user.nombres }}</td>
         <td>{{ user.apellidop }}</td>
         <td>{{ user.apellidom }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.direccion }}</td>
+        <td>{{ user.cuentaVerificada ? 'Sí' : 'No' }}</td>
         <td>
           <button class="btn btn-primary" (click)="openEditModal(user)">Editar</button>
           <button class="btn btn-danger" (click)="deleteUser(user.id)">Eliminar</button>

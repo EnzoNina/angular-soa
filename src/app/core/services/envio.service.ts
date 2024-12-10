@@ -6,7 +6,9 @@ import { environment } from '../../environments/environment';
 @Injectable({
     providedIn: 'root'
 })
+
 export class EnviosService {
+
     private baseUrl = `${environment.gateway}api/envios`;
 
     constructor(private http: HttpClient) { }
@@ -29,6 +31,15 @@ export class EnviosService {
 
     historialEnviosPorUsuario(usuarioId: number): Observable<EnviosResponse[]> {
         return this.http.get<EnviosResponse[]>(`${this.baseUrl}/usuario/${usuarioId}`);
+    }
+
+    estimarFechaEntrega(ubicacionCliente: string, metodoEnvio: string): Observable<Date> {
+        return this.http.get<Date>(`${this.baseUrl}/estimar-fecha-entrega`, {
+            params: {
+                ubicacionCliente,
+                metodoEnvio
+            }
+        });
     }
 }
 

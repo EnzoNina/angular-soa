@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EnviosRequest, EnviosResponse, EnviosService } from '../../core/services/envio.service';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { PagosService } from '../../core/services/pago.service';
@@ -13,13 +13,14 @@ import { EnvioModalComponent } from '../envio-modal/envio-modal.component';
   templateUrl: './envios.component.html',
   styleUrls: ['./envios.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,FormsModule]
+  imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 export class EnviosComponent implements OnInit {
   enviosForm: FormGroup;
   envios: EnviosResponse[] = [];
   pagosPagados: any[] = []; // Nueva propiedad para almacenar los pagos pagados
   userId: string = ''; // Nueva propiedad para almacenar el ID del usuario
+  metodoEnvio: string = 'standard'; // Valor por defecto para el método de envío
 
   constructor(
     private enviosService: EnviosService,
@@ -96,6 +97,18 @@ export class EnviosComponent implements OnInit {
     this.enviosService.cancelarEnvio(envioId).subscribe(() => {
       Swal.fire('Cancelado', 'El envío ha sido cancelado', 'success');
       this.envios = this.envios.filter(envio => envio.id !== envioId);
+    });
+  }
+
+  estimarFechaEntrega(direccionEnvio: string, metodoEnvio: string): void {
+    this.enviosService.estimarFechaEntrega(direccionEnvio, metodoEnvio).subscribe(fechaEntrega => {
+      Swal.fire('Fecha Estimada de Entrega', `La fecha estimada de entrega es: ${fechaEntrega}`, 'info');
+    });
+  }
+
+  generarYEnviarFactura(pagoId: number): void {
+    this.pagosService.generarYEnviarFactura(pagoId).subscribe(() => {
+      Swal.fire('Factura generada y enviada', `ID: ${pagoId}`, 'success');
     });
   }
 }

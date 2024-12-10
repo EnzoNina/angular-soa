@@ -118,4 +118,16 @@ export class CartModalComponent implements OnInit {
       this.dialogRef.close();
     });
   }
+
+  moveCartToWishlist(): void {
+    const loadingDialogRef = this.dialog.open(LoadingComponent, {
+      disableClose: true
+    });
+
+    const cartId = +localStorage.getItem('cartId')!;
+    this.cartService.moveCartToWishlist(cartId).subscribe(() => {
+      console.log('Carrito movido a la lista de deseos');
+      this.createNewCart(loadingDialogRef);
+    });
+  }
 }

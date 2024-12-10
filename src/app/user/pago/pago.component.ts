@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PagosService } from '../../core/services/pago.service';
+import { CartService } from '../../core/services/cart.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -15,7 +16,12 @@ export class PagoComponent implements OnInit {
   montoTotal: any;
   pagoId: any;
 
-  constructor(private pagosService: PagosService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private pagosService: PagosService,
+    private cartService: CartService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -45,7 +51,20 @@ export class PagoComponent implements OnInit {
   confirmarPago(pagoId: number) {
     this.pagosService.confirmarPago(pagoId).subscribe(response => {
       Swal.fire('Pago confirmado', `ID: ${pagoId}`, 'success');
-      this.router.navigate(['/user/index']); // Redirigir al índice
+      this.generarYEnviarFactura(pagoId); // Llamar al método para generar y enviar la factura
+      this.cartService.deleteCart(this.cartService.getCartId()).subscribe(() => {
+        this.cartService.createNewCart(this.pedidoId).subscribe(() => {
+          localStorage.removeItem('cartId'); // Borrar el cartId de localStorage
+          Swal.fire('Nuevo carrito creado', 'Se ha creado un nuevo carrito', 'success');
+        });
+      });
+    });
+  }
+
+  generarYEnviarFactura(pagoId: number) {
+    this.pagosService.generarYEnviarFactura(pagoId).subscribe(() => {
+      Swal.fire('Factura generada y enviada', `ID: ${pagoId}`, 'success');
+      this.router.navigate(['/user/index']); // Redirigir al índice después de generar la factura
     });
   }
 

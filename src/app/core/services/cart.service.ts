@@ -150,6 +150,15 @@ export class CartService {
     );
   }
 
+  moveCartToWishlist(cartId: number): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${cartId}/convertir-a-deseos`, {}).pipe(
+      tap(() => {
+        this.cartData = null; // Limpiar los datos almacenados
+        localStorage.removeItem('cartId'); // Limpiar el cartId de localStorage
+      })
+    );
+  }
+
   private getUserIdFromToken(): Observable<number | null> {
     const token = localStorage.getItem('jwt');
     if (!token) {

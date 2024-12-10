@@ -28,12 +28,7 @@ export class UserListComponent implements OnInit {
 
   getAllUsers(): void {
     this.adminUserService.getAllUsers().subscribe(users => {
-      this.users = users
-        .filter((user: any) => user.activo) // Filtrar usuarios activos
-        .map((user: any) => {
-          const [apellidop, apellidom] = user.apellido.split(' ');
-          return { ...user, apellidop, apellidom };
-        });
+      this.users = users.filter((user: any) => user.activo); // Filtrar usuarios activos
     });
   }
 
@@ -41,8 +36,7 @@ export class UserListComponent implements OnInit {
     if (this.searchUserId) {
       this.adminUserService.getUserById(this.searchUserId).subscribe(user => {
         if (user.activo) { // Verificar si el usuario está activo
-          const [apellidop, apellidom] = user.apellido.split(' ');
-          this.users = [{ ...user, apellidop, apellidom }];
+          this.users = [user];
         } else {
           this.users = [];
         }
@@ -53,7 +47,7 @@ export class UserListComponent implements OnInit {
   }
 
   openCreateModal(): void {
-    this.selectedUser = { nombres: '', apellidop: '', apellidom: '', email: '', password: '', direccion: '' }; // Inicializa un nuevo usuario
+    this.selectedUser = { nombres: '', apellidop: '', apellidom: '', email: '', password: '', direccion: '', cuentaVerificada: false }; // Inicializa un nuevo usuario
     const dialogRef = this.dialog.open(UserModalComponent, {
       data: { user: this.selectedUser }
     });
@@ -85,7 +79,8 @@ export class UserListComponent implements OnInit {
       apellidom: this.selectedUser.apellidom,
       email: this.selectedUser.email,
       password: this.selectedUser.password,
-      direccion: this.selectedUser.direccion
+      direccion: this.selectedUser.direccion,
+      cuentaVerificada: this.selectedUser.cuentaVerificada
     };
     this.adminUserService.createUser(user).subscribe(() => {
       this.getAllUsers();
@@ -99,7 +94,8 @@ export class UserListComponent implements OnInit {
       apellidom: this.selectedUser.apellidom,
       email: this.selectedUser.email,
       password: this.selectedUser.password,
-      direccion: this.selectedUser.direccion
+      direccion: this.selectedUser.direccion,
+      cuentaVerificada: this.selectedUser.cuentaVerificada
     };
     this.adminUserService.editUser(this.selectedUser.id, user).subscribe(() => {
       this.getAllUsers();

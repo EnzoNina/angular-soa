@@ -40,4 +40,8 @@ export class PagosService {
     return this.http.get<any[]>(`${this.baseUrl}/pagados`);
   }
 
+  generarYEnviarFactura(pagoId: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/factura`, { pagoId });
+  }
+
 }
